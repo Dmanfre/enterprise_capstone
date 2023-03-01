@@ -1,0 +1,57 @@
+---
+title: "washington_county_data"
+author: "Dylan Manfre"
+date: "2023-02-24"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+#libraries
+library(tidyverse)
+library(tidycensus)
+library(janitor)
+library(lubridate)
+
+#removals
+rm(list = "baker_contribs", "baker_expenses", "new_gop_expenses", "pa_dem_contribs", "pa_dem_expenses", "pa_cop contribs", "pa_gop_expenses", "wbb_rosters")
+
+rm(list = "pa_gop_contribs")
+
+
+```
+
+
+```{r}
+
+Sys.setenv(CENSUS_API_KEY = "5cb2b9c628a1d1329c5bf4d36fe4435c6501efc8", overwrite = TRUE)
+
+```
+
+```{r}
+ACS <- load_variables(2020, "acs5")
+
+
+#Median household income in the last 12 months
+get_acs(geography = "place",
+              variables = c(household_income_12mo = "B19013_001"),
+              state = "MD",
+              year = 2020) %>% 
+  filter(NAME == "Hagerstown city, Maryland")
+
+rm(list = "medincome_20", "medincome_19")
+
+# median household income will have the numebr and the total household income will show the number of households. 
+
+```
+
+```{r}
+
+
+
+
+```
+
