@@ -30,9 +30,10 @@ Sys.setenv(CENSUS_API_KEY = "5cb2b9c628a1d1329c5bf4d36fe4435c6501efc8", overwrit
 
 ```{r}
 ACS <- load_variables(2020, "acs5")
+#What is the difference between the ACS and the ACS5?
 
 
-#Median earnings in the last 12 months
+#Median earnings in the last 12 months 
  get_acs(geography = "place",
               variables = c(mediearnigns = "B08121_001"),
               state = "MD",
@@ -47,8 +48,32 @@ ACS <- load_variables(2020, "acs5")
               year = 2021) %>% 
   filter(NAME == "Hagerstown city, Maryland")
   #Produces estimate 51008... moe 3863
+  
+  
+  
+#Median family income in last 12 months for 4 person household
+  get_acs(geography = "place",
+              variables = c(medincome_4ppl = "B19119_004"),
+              state = "MD",
+              year = 2010) %>% 
+  filter(NAME == "Hagerstown city, Maryland")
+#This number is only for 2020? How far back do you think would be good to go 
+#I think this may be the correct variable but I'm not sure at the moment.
+  
 
-# median household income will have the numebr and the total household income will show the number of households. 
+
+ #Median income in the last 12 months total by place of birth in the US.
+ 
+  get_acs(geography = "place",
+              variables = c(mediearnigns = "B06011_001"),
+              state = "MD",
+              year = 2020) %>% 
+  filter(NAME == "Hagerstown city, Maryland")
+  #What exactly does it mean why it says by place of birth in the US?
+  
+  
+ 
+ # median household income will have the numebr and the total household income will show the number of households. 
 
 ```
 
