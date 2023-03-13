@@ -49,10 +49,10 @@ acs1 <-  load_variables(2021, "acs1")
 
 ```{r}
 #Median family income in last 12 months for 4 person household
-medi_14 <-  get_acs(geography = "place",
+get_acs(geography = "place",
               variables = c(medincome_4pers = "B19119_004"),
               state = "MD",
-              year = 2015) %>% 
+              year = 2021) %>% 
   filter(NAME == "Hagerstown city, Maryland")
 
 
@@ -66,26 +66,10 @@ medi_14 <-  get_acs(geography = "place",
 
 ```{r}
 
-```
-
-```{r}
-#Median income in the last 12 months total by place of birth in the US using acs 5
-get_acs(geography = "place",
-              variables = c(mediearnigns = "B06011_001"),
-              state = "MD",
-              year = 2020) %>% 
-  filter(NAME == "Hagerstown city, Maryland")
-
-#What exactly does it mean why it says by place of birth in the US?
-
-```
-
-```{r}
-
 # is using acs 5'
 #when writing this make it say that these numbers are based on five-year rolling averages...
 
-
+#This data is for Hagerstown
 htown_2015 <- get_acs(geography = "place",
               variables = c(medi_house_income = "B19013_001"),
               state = "MD",
@@ -148,10 +132,69 @@ htown_2021 <- get_acs(geography = "place",
 
 ```{r}
 #binding the rows together
+#hagerstown
+medi_house_income_htown <-  bind_rows(htown_2015, htown_2016, htown_2017, htown_2018, htown_2019, htown_2020, htown_2021)
 
-medi_house_income <-  bind_rows(htown_2015, htown_2016, htown_2017, htown_2018, htown_2019, htown_2020, htown_2021)
+
+fred_medi_house_income <- bind_rows(fred_2015, fred_2016, fred_2017, fred_2018, fred_2019, fred_2020, fred_2021)
+
+```
+
+ˆ
+```{r}
+#This data is for frederick
+fred_2015 <- get_acs(geography = "place",
+              variables = c(medi_house_income = "B19013_001"),
+              state = "MD",
+              year = 2015) %>% 
+  filter(NAME == "Frederick city, Maryland") %>% 
+  mutate(year = 2015)
 
 
+fred_2016 <- get_acs(geography = "place",
+              variables = c(medi_house_income = "B19013_001"),
+              state = "MD",
+              year = 2016) %>% 
+  filter(NAME == "Frederick city, Maryland") %>% 
+  mutate(year = 2016)
+
+
+fred_2017 <- get_acs(geography = "place",
+              variables = c(medi_house_income = "B19013_001"),
+              state = "MD",
+              year = 2017) %>% 
+  filter(NAME == "Frederick city, Maryland") %>% 
+  mutate(year = 2017)
+
+fred_2018 <- get_acs(geography = "place",
+              variables = c(medi_house_income = "B19013_001"),
+              state = "MD",
+              year = 2018) %>% 
+  filter(NAME == "Frederick city, Maryland") %>% 
+  mutate(year = 2018)
+
+
+fred_2019 <- get_acs(geography = "place",
+              variables = c(medi_house_income = "B19013_001"),
+              state = "MD",
+              year = 2019) %>% 
+  filter(NAME == "Frederick city, Maryland") %>% 
+  mutate(year = 2019)
+
+
+fred_2020 <- get_acs(geography = "place",
+              variables = c(medi_house_income = "B19013_001"),
+              state = "MD",
+              year = 2020) %>% 
+  filter(NAME == "Frederick city, Maryland") %>% 
+  mutate(year = 2020)
+
+fred_2021 <- get_acs(geography = "place",
+              variables = c(medi_house_income = "B19013_001"),
+              state = "MD",
+              year = 2021) %>% 
+  filter(NAME == "Frederick city, Maryland") %>% 
+  mutate(year = 2021)
 
 
 ```
