@@ -21,6 +21,15 @@ library(lubridate)
 
 ```
 
+```{r}
+
+rm(list = "baker_contribs", "baker_expenses", "new_gop_expenses", "pa_dem_contribs", "pa_dem_expenses", "pa_gop_contribs", "pa_gop_expesnes", "wbb_rosters")
+
+rm(list = "ACS_5", "htown_2015", "htown_2019", "medi_14", "pa_gop_expenses")
+
+
+```
+
 
 ```{r}
 
@@ -30,73 +39,118 @@ Sys.setenv(CENSUS_API_KEY = "5cb2b9c628a1d1329c5bf4d36fe4435c6501efc8", overwrit
 ```
 
 ```{r}
-ACS <- load_variables(2020, "acs5")
+ACS_5 <- load_variables(2020, "acs5")
+
+acs1 <-  load_variables(2021, "acs1")
+
 #What is the difference between the ACS and the ACS5?
+```
 
 
-#Median earnings in the last 12 months 
- get_acs(geography = "place",
-              variables = c(mediearnigns = "B08121_001"),
-              state = "MD",
-              year = 2020) %>% 
-  filter(NAME == "Hagerstown city, Maryland")
-
-
- #median family income in the past 12 months
-  get_acs(geography = "place",
-              variables = c(mediearnigns = "B10010_001"),
-              state = "MD",
-              year = 2021) %>% 
-  filter(NAME == "Hagerstown city, Maryland")
-  #Produces estimate 51008... moe 3863
-  
-  
-  
+```{r}
 #Median family income in last 12 months for 4 person household
 medi_14 <-  get_acs(geography = "place",
               variables = c(medincome_4pers = "B19119_004"),
               state = "MD",
-              year = 2014) %>% 
+              year = 2015) %>% 
   filter(NAME == "Hagerstown city, Maryland")
 
-#This number is only for 2020? How far back do you think would be good to go 
+
+
+
+#use acs1 to try and get each year... might be a state source. 
+
+#This number is only for 2020? How far back do you think would be good to go
 #I think this may be the correct variable but I'm not sure at the moment.
-  
+```
 
+```{r}
 
- #Median income in the last 12 months total by place of birth in the US.
- 
+```
+
+```{r}
+#Median income in the last 12 months total by place of birth in the US using acs 5
 get_acs(geography = "place",
               variables = c(mediearnigns = "B06011_001"),
               state = "MD",
               year = 2020) %>% 
   filter(NAME == "Hagerstown city, Maryland")
-  
-  #What exactly does it mean why it says by place of birth in the US?
-  
-  
- 
- # median household income will have the numebr and the total household income will show the number of households. 
+
+#What exactly does it mean why it says by place of birth in the US?
 
 ```
 
 ```{r}
-# Notes to try and Code from the Census
+
+# is using acs 5'
+#when writing this make it say that these numbers are based on five-year rolling averages...
+
+
+htown_2015 <- get_acs(geography = "place",
+              variables = c(medi_house_income = "B19013_001"),
+              state = "MD",
+              year = 2015) %>% 
+  filter(NAME == "Hagerstown city, Maryland") %>% 
+  mutate(year = 2015)
+
+
+htown_2016 <- get_acs(geography = "place",
+              variables = c(medi_house_income = "B19013_001"),
+              state = "MD",
+              year = 2016) %>% 
+  filter(NAME == "Hagerstown city, Maryland") %>% 
+  mutate(year = 2016)
+
+
+htown_2017 <- get_acs(geography = "place",
+              variables = c(medi_house_income = "B19013_001"),
+              state = "MD",
+              year = 2017) %>% 
+  filter(NAME == "Hagerstown city, Maryland") %>% 
+  mutate(year = 2017)
+
+htown_2018 <- get_acs(geography = "place",
+              variables = c(medi_house_income = "B19013_001"),
+              state = "MD",
+              year = 2018) %>% 
+  filter(NAME == "Hagerstown city, Maryland") %>% 
+  mutate(year = 2018)
+
+
+htown_2019 <- get_acs(geography = "place",
+              variables = c(medi_house_income = "B19013_001"),
+              state = "MD",
+              year = 2019) %>% 
+  filter(NAME == "Hagerstown city, Maryland") %>% 
+  mutate(year = 2019)
+
+
+htown_2020 <- get_acs(geography = "place",
+              variables = c(medi_house_income = "B19013_001"),
+              state = "MD",
+              year = 2020) %>% 
+  filter(NAME == "Hagerstown city, Maryland") %>% 
+  mutate(year = 2020)
+
+htown_2021 <- get_acs(geography = "place",
+              variables = c(medi_house_income = "B19013_001"),
+              state = "MD",
+              year = 2021) %>% 
+  filter(NAME == "Hagerstown city, Maryland") %>% 
+  mutate(year = 2021)
+
 
 
 
 
 ```
 
-ˆ
+
 ```{r}
+#binding the rows together
 
-joining the tables
+medi_house_income <-  bind_rows(htown_2015, htown_2016, htown_2017, htown_2018, htown_2019, htown_2020, htown_2021)
 
-#this is 2015-2021 with 2021 as row 8
-medi_income <- bind_rows(medi_14, medi_15, medi_16, medi_17, medi_18, medi_19, medi_20, medi_21)
-
-write.csv(medi_income, "medi_income.csv", row.names = FALSE)
 
 
 
