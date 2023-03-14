@@ -40,9 +40,6 @@ Sys.setenv(CENSUS_API_KEY = "5cb2b9c628a1d1329c5bf4d36fe4435c6501efc8", overwrit
 
 ```{r}
 ACS_5 <- load_variables(2020, "acs5")
-
-acs1 <-  load_variables(2021, "acs1")
-
 #What is the difference between the ACS and the ACS5?
 ```
 
@@ -129,18 +126,6 @@ htown_2021 <- get_acs(geography = "place",
 
 ```
 
-
-```{r}
-#binding the rows together
-#hagerstown
-medi_house_income_htown <-  bind_rows(htown_2015, htown_2016, htown_2017, htown_2018, htown_2019, htown_2020, htown_2021)
-
-
-fred_medi_house_income <- bind_rows(fred_2015, fred_2016, fred_2017, fred_2018, fred_2019, fred_2020, fred_2021)
-
-```
-
-ˆ
 ```{r}
 #This data is for frederick
 fred_2015 <- get_acs(geography = "place",
@@ -196,5 +181,18 @@ fred_2021 <- get_acs(geography = "place",
   filter(NAME == "Frederick city, Maryland") %>% 
   mutate(year = 2021)
 
+
+```
+```{r}
+#binding the rows together
+#hagerstown
+htown_medi_house_income <-  bind_rows(htown_2015, htown_2016, htown_2017, htown_2018, htown_2019, htown_2020, htown_2021)
+
+fred_medi_house_income <- bind_rows(fred_2015, fred_2016, fred_2017, fred_2018, fred_2019, fred_2020, fred_2021)
+
+
+write_csv(htown_medi_house_income, file = "htown_medi_house_income.csv")
+
+write_csv(htown_medi_house_income, file = "fred_medi_house_income.csv")
 
 ```
