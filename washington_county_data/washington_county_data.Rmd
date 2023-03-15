@@ -47,26 +47,14 @@ ACS_5 <- load_variables(2020, "acs5")
 
 
 ```{r}
-#Median family income in last 12 months for 4 person household
-get_acs(geography = "place",
-              variables = c(medincome_4pers = "B19119_004"),
-              state = "MD",
-              year = 2021) %>% 
-  filter(NAME == "Hagerstown city, Maryland")
 
 
-
-
-#use acs1 to try and get each year... might be a state source. 
-
-#This number is only for 2020? How far back do you think would be good to go
-#I think this may be the correct variable but I'm not sure at the moment.
-```
-
-```{r}
 
 # is using acs 5'
 #when writing this make it say that these numbers are based on five-year rolling averages...
+
+#Median household income data 
+
 
 #This data is for Hagerstown
 htown_2015 <- get_acs(geography = "place",
@@ -124,12 +112,10 @@ htown_2021 <- get_acs(geography = "place",
 
 
 
-
-
 ```
 
 ```{r}
-#This data is for frederick
+#This median household income data is for frederick
 fred_2015 <- get_acs(geography = "place",
               variables = c(medi_house_income = "B19013_001"),
               state = "MD",
@@ -185,14 +171,16 @@ fred_2021 <- get_acs(geography = "place",
 
 
 ```
+
 ```{r}
 #binding the rows together
 #hagerstown
 htown_medi_house_income <-  bind_rows(htown_2015, htown_2016, htown_2017, htown_2018, htown_2019, htown_2020, htown_2021)
 
+#Frederick
 fred_medi_house_income <- bind_rows(fred_2015, fred_2016, fred_2017, fred_2018, fred_2019, fred_2020, fred_2021)
 
-
+#exporting them to CSV
 write_csv(htown_medi_house_income, file = "htown_medi_house_income.csv")
 
 write_csv(htown_medi_house_income, file = "fred_medi_house_income.csv")
@@ -214,13 +202,9 @@ get_acs(geography = "place",
 
 
 ```{r}
-## Total Population in Hagerstown and Frederick
+## Total Population in Hagerstown and Frederick```{r}
 
-
-#beginning w Hagerstown
-```
-
-```{r}
+#Hagerstown 
 hpop_10 <-  get_acs(geography = "place",
               variables = c(population = "B01003_001"),
               state = "MD",
@@ -308,9 +292,9 @@ hpop_21 <- get_acs(geography = "place",
 
 ```
 
-```
-```{r}
 
+```{r}
+#Frederick
 fred_10 <-  get_acs(geography = "place",
               variables = c(population = "B01003_001"),
               state = "MD",
