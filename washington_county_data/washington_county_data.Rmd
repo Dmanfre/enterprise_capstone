@@ -194,5 +194,40 @@ fred_medi_house_income <- bind_rows(fred_2015, fred_2016, fred_2017, fred_2018, 
 write_csv(htown_medi_house_income, file = "htown_medi_house_income.csv")
 
 write_csv(htown_medi_house_income, file = "fred_medi_house_income.csv")
+```
+
+
+```{r}
+
+### Trying to get poverty data####
+
+B17001_001 #POVERTY STATUS IN THE PAST 12 MONTHS BY SEX BY AGE
+
+get_acs(geography = "place",
+              variables = c(poverty_status = "B17001_001"),
+              state = "MD",
+              year = 2021) %>% 
+  filter(NAME == "Hagerstown city, Maryland") %>% 
+  mutate(year = 2021)
+
+
+
+
+B17001A_003  #MALE TOTAL INCOME IN THE LAST 12 MONTHS BELOW THE POVERTY LEVEL 
+
+
+
+POVERTY STATUS IN THE PAST 12 MONTHS BY AGE BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 5 YEARS AND OVER
+get_acs(geography = "place",
+              variables = c(poverty_status = "B16009_002"),
+              state = "MD",
+              year = 2021) %>% 
+  filter(NAME == "Hagerstown city, Maryland") %>% 
+  mutate(year = 2021)
+
+
+
+poverty status in the past 12 months by sex by age
 
 ```
+
