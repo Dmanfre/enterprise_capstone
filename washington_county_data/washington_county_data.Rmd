@@ -385,13 +385,33 @@ fred_21 <- get_acs(geography = "place",
 ```
 
 
-
 ```{r}
 ##Binding the rows 
 
 htown_pop <-  bind_rows(hpop_10, hpop_11, hpop_12, hpop_13, hpop_14, hpop_15, hpop_16, hpop_17, hpop_18, hpop_19, hpop_20, hpop_21)
 
 fred_pop <-  bind_rows(fred_10, fred_11, fred_12, fred_13, fred_14, fred_15, fred_16, fred_17, fred_18, fred_19, fred_20, fred_21)
+
+```
+
+```{r}
+##Use this section to look at Education Data##
+
+#HS grad (includes equivlency)
+htown_hsgrad <-  get_acs(geography = "place",
+              variables = c(hsgrad = "B06009_003"),
+              state = "MD",
+              year = 2021) %>% 
+  filter(NAME == "Hagerstown city, Maryland") %>% 
+  mutate(year = 2021)
+
+#graduate or professional degree
+ get_acs(geography = "place",
+              variables = c(gradOprodegree = "B06009_006"),
+              state = "MD",
+              year = 2021) %>% 
+  filter(NAME == "Hagerstown city, Maryland") %>% 
+  mutate(year = 2021)
 
 ```
 
