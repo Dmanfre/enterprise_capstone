@@ -191,13 +191,17 @@ write_csv(htown_medi_house_income, file = "fred_medi_house_income.csv")
 ### Trying to get poverty data####
 
 B17001_001 #POVERTY STATUS IN THE PAST 12 MONTHS BY SEX BY AGE
-
 get_acs(geography = "place",
               variables = c(poverty_status = "B17001_001"),
               state = "MD",
               year = 2021) %>% 
   filter(NAME == "Hagerstown city, Maryland") %>% 
   mutate(year = 2021)
+
+
+
+
+
 ```
 
 
@@ -391,6 +395,13 @@ fred_21 <- get_acs(geography = "place",
 htown_pop <-  bind_rows(hpop_10, hpop_11, hpop_12, hpop_13, hpop_14, hpop_15, hpop_16, hpop_17, hpop_18, hpop_19, hpop_20, hpop_21)
 
 fred_pop <-  bind_rows(fred_10, fred_11, fred_12, fred_13, fred_14, fred_15, fred_16, fred_17, fred_18, fred_19, fred_20, fred_21)
+
+#exporting them to CSV
+write_csv(htown_pop, file = "htown_pop.csv")
+
+write_csv(fred_pop, file = "fred_pop.csv")
+```
+
 
 ```
 
