@@ -62,7 +62,7 @@ md_cities <- get_acs(geography = "place",
 
 #Hagerstown - likely need 2021
   
-get_acs(geography = "place",
+h_income_2015 <- get_acs(geography = "place",
               variables = c(medi_house_income = "B19013_001"),
               state = "MD",
               year = 2015) %>% 
@@ -434,8 +434,9 @@ write_csv(fred_pop, file = "fred_pop.csv")
 ```
 
 
-
 ```{r}
+
+## Waldorf 
 
 Wal_2009 <- get_acs(geography = "place",
           variables = c(medi_house_income = "B19013_001"),
@@ -445,7 +446,12 @@ Wal_2009 <- get_acs(geography = "place",
   mutate(year = 2009)
 #2009 is the first year the ACS starts
 
-
+Wal_2021 <- get_acs(geography = "place",
+          variables = c(medi_house_income = "B19013_001"),
+              state = "MD",
+              year = 2021) %>% 
+  filter(NAME == "Waldorf CDP, Maryland") %>% 
+  mutate(year = 2021)
 
 
 
