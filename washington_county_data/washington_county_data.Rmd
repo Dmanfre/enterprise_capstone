@@ -403,6 +403,19 @@ write_csv(fred_pop, file = "fred_pop.csv")
 ```
 
 
+
+```{r}
+
+get_acs(geography = "place",
+              variables = c(medi_house_income = "B19013_001"),
+              state = "MD",
+              year = 2009) %>% 
+  filter(NAME == "Waldorf CDP, Maryland") %>% 
+  mutate(year = 2009)
+#2009 is the first year the ACS starts
+
+```
+
 ```
 
 ```{r}
