@@ -61,7 +61,7 @@ md_cities <- get_acs(geography = "place",
 
 ```{r}
 
-#MEDIAN HOUSEHOLD INCOME
+#MEDIAN HOUSEHOLD INCOME 2021
 
 #Hagerstown - likely need 2021
 h_income_2021 <- get_acs(geography = "place",
@@ -87,6 +87,14 @@ w_income_2021 <- get_acs(geography = "place",
               year = 2021) %>% 
   filter(NAME == "Waldorf CDP, Maryland") %>% 
   mutate(year = 2021)
+
+
+w_income_2009 <- get_acs(geography = "place",
+              variables = c(medi_house_income = "B19013_001"),
+              state = "MD",
+              year = 2009) %>% 
+  filter(NAME == "Waldorf CDP, Maryland") %>% 
+  mutate(year = 2000)
 
 #Bowie - need 1994 + 2021
 bo_income_2021 <- get_acs(geography = "place",
@@ -133,7 +141,7 @@ all_income_2021 <-  bind_rows(a_income_2021, ba_income_2021, bo_income_2021, f_i
 
 ```{r}
 
-# TOTAL POPULATION
+# TOTAL POPULATION 2021
 
 #Hagerstown 
 h_pop_2021 <- get_acs(geography = "place",
@@ -210,134 +218,18 @@ get_acs(geography = "place",
   mutate(year = 2021)
 
 
-```
 
-
-
-```{r}
-#Frederick
-fred_10 <-  get_acs(geography = "place",
-              variables = c(population = "B01003_001"),
-              state = "MD",
-              year = 2010) %>% 
-  filter(NAME == "Frederick city, Maryland") %>% 
-  mutate(year = 2010)
-
-fred_11 <-get_acs(geography = "place",
-              variables = c(population = "B01003_001"),
-              state = "MD",
-              year = 2011) %>% 
-  filter(NAME == "Frederick city, Maryland") %>% 
-  mutate(year = 2011)
-
-fred_12 <- get_acs(geography = "place",
-              variables = c(population = "B01003_001"),
-              state = "MD",
-              year = 2012) %>% 
-  filter(NAME == "Frederick city, Maryland") %>% 
-  mutate(year = 2012)
-
-fred_13 <- get_acs(geography = "place",
-              variables = c(population = "B01003_001"),
-              state = "MD",
-              year = 2013) %>% 
-  filter(NAME == "Frederick city, Maryland") %>% 
-  mutate(year = 2013)
-
-fred_14 <- get_acs(geography = "place",
-              variables = c(population = "B01003_001"),
-              state = "MD",
-              year = 2014) %>% 
-  filter(NAME == "Frederick city, Maryland") %>% 
-  mutate(year = 2014)
-
-fred_15 <- get_acs(geography = "place",
-              variables = c(population = "B01003_001"),
-              state = "MD",
-              year = 2015) %>% 
-  filter(NAME == "Frederick city, Maryland") %>% 
-  mutate(year = 2015)
-
-fred_16 <- get_acs(geography = "place",
-              variables = c(population = "B01003_001"),
-              state = "MD",
-              year = 2016) %>% 
-  filter(NAME == "Frederick city, Maryland") %>% 
-  mutate(year = 2016)
-
-fred_17 <-get_acs(geography = "place",
-              variables = c(population = "B01003_001"),
-              state = "MD",
-              year = 2017) %>% 
-  filter(NAME == "Frederick city, Maryland") %>% 
-  mutate(year = 2017)
-
-fred_18 <- get_acs(geography = "place",
-              variables = c(population = "B01003_001"),
-              state = "MD",
-              year = 2018) %>% 
-  filter(NAME == "Frederick city, Maryland") %>% 
-  mutate(year = 2018)
-
-fred_19 <- get_acs(geography = "place",
-              variables = c(population = "B01003_001"),
-              state = "MD",
-              year = 2019) %>% 
-  filter(NAME == "Frederick city, Maryland") %>% 
-  mutate(year = 2019)
-
-
-fred_20 <- get_acs(geography = "place",
-              variables = c(population = "B01003_001"),
-              state = "MD",
-              year = 2020) %>% 
-  filter(NAME == "Frederick city, Maryland") %>% 
-  mutate(year = 2020)
-
-fred_21 <- get_acs(geography = "place",
-              variables = c(population = "B01003_001"),
-              state = "MD",
-              year = 2021) %>% 
-  filter(NAME == "Frederick city, Maryland") %>% 
-  mutate(year = 2021)
 
 
 
 ```
 
-
 ```{r}
-##Binding the rows 
 
-htown_pop <-  bind_rows(hpop_10, hpop_11, hpop_12, hpop_13, hpop_14, hpop_15, hpop_16, hpop_17, hpop_18, hpop_19, hpop_20, hpop_21)
-
-fred_pop <-  bind_rows(fred_10, fred_11, fred_12, fred_13, fred_14, fred_15, fred_16, fred_17, fred_18, fred_19, fred_20, fred_21)
-
-#exporting them to CSV
-write_csv(htown_pop, file = "htown_pop.csv")
-
-write_csv(fred_pop, file = "fred_pop.csv")
 ```
 
 
 ```{r}
-
-## Waldorf 
-
-Wal_2009 <- get_acs(geography = "place",
-          variables = c(medi_house_income = "B19013_001"),
-              state = "MD",
-              year = 2009) %>% 
-  filter(NAME == "Waldorf CDP, Maryland") %>% 
-  mutate(year = 2009)
-#2009 is the first year the ACS starts
-
-Wal_2021 <- get_acs(geography = "place",
-          variables = c(medi_house_income = "B19013_001"),
-              state = "MD",
-              year = 2021) %>% 
-  filter(NAME == "Waldorf CDP, Maryland") %>% 
-  mutate(year = 2021)
 
 
 
