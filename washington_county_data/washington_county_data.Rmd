@@ -225,16 +225,73 @@ get_acs(geography = "place",
 ```
 
 ```{r}
+## USING THIS SECTION TO GET HOUSING VALUES
 
-B25075_003 == label == Estimate!!Total:!!$10,000 to $14,999
+#B25077_001 == label == Estimate!!Median value (dollars)
 
-
-get_acs(geography = "place",
-              variables = c(total_home_value = "B25075_003"),
+#Hagerstown
+h_homeval_2021 <- get_acs(geography = "place",
+              variables = c(total_home_value = "B25077_001"),
               state = "MD",
               year = 2021) %>% 
   filter(NAME == "Hagerstown city, Maryland") %>% 
   mutate(year = 2021)
+
+#Frederick
+f_homeval_2021 <- get_acs(geography = "place",
+              variables = c(medi_house_income = "B25077_001"),
+              state = "MD",
+              year = 2021) %>% 
+  filter(NAME == "Frederick city, Maryland") %>% 
+  mutate(year = 2021)
+
+#Waldorf
+w_homeval_2021 <- get_acs(geography = "place",
+              variables = c(medi_house_income = "B25077_001"),
+              state = "MD",
+              year = 2021) %>% 
+  filter(NAME == "Waldorf CDP, Maryland") %>% 
+  mutate(year = 2021)
+
+#Bowie
+bo_homeval_2021 <- get_acs(geography = "place",
+              variables = c(medi_house_income = "B25077_001"),
+              state = "MD",
+              year = 2021) %>% 
+  filter(NAME == "Bowie city, Maryland") %>% 
+  mutate(year = 2021)
+
+#Salisbury
+s_homeval_2021 <- get_acs(geography = "place",
+              variables = c(medi_house_income = "B25077_001"),
+              state = "MD",
+              year = 2021) %>% 
+  filter(NAME == "Salisbury city, Maryland") %>% 
+  mutate(year = 2021)
+
+#Baltimore
+b_homeval_2021 <- get_acs(geography = "place",
+              variables = c(medi_house_income = "B25077_001"),
+              state = "MD",
+              year = 2021) %>% 
+  filter(NAME == "Baltimore city, Maryland") %>% 
+  mutate(year = 2021)
+
+#Aberdeen
+a_homeval_2021 <- get_acs(geography = "place",
+              variables = c(medi_house_income = "B25077_001"),
+              state = "MD",
+              year = 2021) %>% 
+  filter(NAME == "Aberdeen city, Maryland") %>% 
+  mutate(year = 2021)
+
+#Combine all 2021 income
+
+all_homeval_2021 <-  bind_rows(h_homeval_2021, f_homeval_2021, w_homeval_2021, bo_homeval_2021, s_homeval_2021, b_homeval_2021, a_homeval_2021) %>% 
+ clean_names() %>%
+  select(variable, year, name, estimate)
+
+
 ```
 
 
