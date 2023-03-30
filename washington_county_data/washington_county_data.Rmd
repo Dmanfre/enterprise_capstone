@@ -226,6 +226,15 @@ get_acs(geography = "place",
 
 ```{r}
 
+B25075_003 == label == Estimate!!Total:!!$10,000 to $14,999
+
+
+get_acs(geography = "place",
+              variables = c(total_home_value = "B25075_003"),
+              state = "MD",
+              year = 2021) %>% 
+  filter(NAME == "Hagerstown city, Maryland") %>% 
+  mutate(year = 2021)
 ```
 
 
