@@ -225,7 +225,7 @@ get_acs(geography = "place",
 ```
 
 ```{r}
-## USING THIS SECTION TO GET HOUSING VALUES
+## USING THIS SECTION TO GET MEDIAN HOUSING VALUES
 
 #B25077_001 == label == Estimate!!Median value (dollars)
 
