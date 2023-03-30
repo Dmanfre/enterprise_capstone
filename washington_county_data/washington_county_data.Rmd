@@ -231,7 +231,7 @@ get_acs(geography = "place",
 
 #Hagerstown
 h_homeval_2021 <- get_acs(geography = "place",
-              variables = c(total_home_value = "B25077_001"),
+              variables = c(medi_home_value = "B25077_001"),
               state = "MD",
               year = 2021) %>% 
   filter(NAME == "Hagerstown city, Maryland") %>% 
@@ -239,7 +239,7 @@ h_homeval_2021 <- get_acs(geography = "place",
 
 #Frederick
 f_homeval_2021 <- get_acs(geography = "place",
-              variables = c(medi_house_income = "B25077_001"),
+              variables = c(medi_home_value = "B25077_001"),
               state = "MD",
               year = 2021) %>% 
   filter(NAME == "Frederick city, Maryland") %>% 
@@ -247,7 +247,7 @@ f_homeval_2021 <- get_acs(geography = "place",
 
 #Waldorf
 w_homeval_2021 <- get_acs(geography = "place",
-              variables = c(medi_house_income = "B25077_001"),
+              variables = c(medi_home_value = "B25077_001"),
               state = "MD",
               year = 2021) %>% 
   filter(NAME == "Waldorf CDP, Maryland") %>% 
@@ -255,7 +255,7 @@ w_homeval_2021 <- get_acs(geography = "place",
 
 #Bowie
 bo_homeval_2021 <- get_acs(geography = "place",
-              variables = c(medi_house_income = "B25077_001"),
+              variables = c(medi_home_value = "B25077_001"),
               state = "MD",
               year = 2021) %>% 
   filter(NAME == "Bowie city, Maryland") %>% 
@@ -263,7 +263,7 @@ bo_homeval_2021 <- get_acs(geography = "place",
 
 #Salisbury
 s_homeval_2021 <- get_acs(geography = "place",
-              variables = c(medi_house_income = "B25077_001"),
+              variables = c(medi_home_value = "B25077_001"),
               state = "MD",
               year = 2021) %>% 
   filter(NAME == "Salisbury city, Maryland") %>% 
@@ -271,7 +271,7 @@ s_homeval_2021 <- get_acs(geography = "place",
 
 #Baltimore
 b_homeval_2021 <- get_acs(geography = "place",
-              variables = c(medi_house_income = "B25077_001"),
+              variables = c(medi_home_value = "B25077_001"),
               state = "MD",
               year = 2021) %>% 
   filter(NAME == "Baltimore city, Maryland") %>% 
@@ -279,7 +279,7 @@ b_homeval_2021 <- get_acs(geography = "place",
 
 #Aberdeen
 a_homeval_2021 <- get_acs(geography = "place",
-              variables = c(medi_house_income = "B25077_001"),
+              variables = c(medi_home_value = "B25077_001"),
               state = "MD",
               year = 2021) %>% 
   filter(NAME == "Aberdeen city, Maryland") %>% 
