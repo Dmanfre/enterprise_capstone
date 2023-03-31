@@ -51,9 +51,9 @@ md_cities <- get_acs(geography = "place",
 
 #MEDIAN HOUSEHOLD INCOME 2021
 
-#Hagerstown - likely need 2021
-h_income_2021 <- get_acs(geography = "place",
-              variables = c(medi_house_income = "B19013_001", population = "B01003_001"),
+#Hagerstown
+h_2021 <- get_acs(geography = "place",
+              variables = c(medi_house_income = "B19013_001", population = "B01003_001", medi_home_value = "B25077_001"),
               state = "MD",
               year = 2021) %>% 
   filter(NAME == "Hagerstown city, Maryland") %>% 
