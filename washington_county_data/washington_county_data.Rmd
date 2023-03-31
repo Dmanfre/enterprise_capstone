@@ -114,15 +114,12 @@ variables = c(medi_house_income = "B19013_001", population = "B01003_001", medi_
   mutate(year = 2021)
 
 #Combine all 2021 income
-all_income_2021 <-  bind_rows(a_income_2021, ba_income_2021, bo_income_2021, f_income_2021, h_income_2021, s_income_2021, w_income_2021) %>%
-  clean_names() %>%
-  select(variable, year, name, estimate)
+#all_income_2021 <-  bind_rows()
 
 #exporting them to CSV
 #write_csv(htown_medi_house_income, file = "htown_medi_house_income.csv")
 #write_csv(htown_medi_house_income, file = "fred_medi_house_income.csv")
 
-rm(list = "bo_income_2021")
 
 ```
 
