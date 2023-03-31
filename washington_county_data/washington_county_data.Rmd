@@ -49,7 +49,7 @@ md_cities <- get_acs(geography = "place",
 
 ```{r}
 
-#MEDIAN HOUSEHOLD INCOME 2021
+# ALL DATA
 
 #Hagerstown
 h_2021 <- get_acs(geography = "place",
