@@ -61,8 +61,8 @@ h_2021 <- get_acs(geography = "place",
 
 #Frederick - will likely use 1990 + 2021
 #We would like 1990 because that's when the ballpark opened; how do we do this?
-f_income_2021 <- get_acs(geography = "place",
-              variables = c(medi_house_income = "B19013_001"),
+f_2021 <- get_acs(geography = "place",
+              variables = c(medi_house_income = "B19013_001", population = "B01003_001", medi_home_value = "B25077_001"),
               state = "MD",
               year = 2021) %>% 
   filter(NAME == "Frederick city, Maryland") %>% 
