@@ -20,18 +20,6 @@ library(lubridate)
 
 ```{r}
 
-rm(list = "baker_contribs", "baker_expenses", "new_gop_expenses", "pa_dem_contribs", "pa_dem_expenses", "pa_gop_contribs", "pa_gop_expesnes", "wbb_rosters")
-
-rm(list = "ACS_5", "htown_2015", "htown_2019", "medi_14", "pa_gop_expenses")
-
-
-rm(list = "hppop_15")
-
-```
-
-
-```{r}
-
 # Load Census API key
 
 Sys.setenv(CENSUS_API_KEY = "5cb2b9c628a1d1329c5bf4d36fe4435c6501efc8", overwrite = TRUE)
@@ -65,7 +53,7 @@ md_cities <- get_acs(geography = "place",
 
 #Hagerstown - likely need 2021
 h_income_2021 <- get_acs(geography = "place",
-              variables = c(medi_house_income = "B19013_001"),
+              variables = c(medi_house_income = "B19013_001", population = "B01003_001"),
               state = "MD",
               year = 2021) %>% 
   filter(NAME == "Hagerstown city, Maryland") %>% 
@@ -323,4 +311,3 @@ htown_hsgrad <-  get_acs(geography = "place",
   mutate(year = 2021)
 
 ```
-
