@@ -140,6 +140,8 @@ get_acs(geography = "place",
 
 ### Maybe here we can look at employment data to get a percentage of how many people are employed vs not. ###
 
+### Maybe also worth looking at how many people work remotely vs in person ... may not be an important metroc cuz none of these cities are real metro areas. 
+
 
 
 ```
