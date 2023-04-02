@@ -138,6 +138,8 @@ get_acs(geography = "place",
 
 ```{r}
 
+### Maybe here we can look at employment data to get a percentage of how many people are employed vs not. ###
+
 
 
 ```
@@ -145,6 +147,9 @@ get_acs(geography = "place",
 ```
 
 ```{r}
+
+### Maybe we can take a look here and see how many people have Bachelor's Degrees vs Not ### 
+
 ##Use this section to look at Education Data##
 
 #HS grad (includes equivlency)
