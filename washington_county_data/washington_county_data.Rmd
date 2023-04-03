@@ -32,8 +32,6 @@ Sys.setenv(CENSUS_API_KEY = "5cb2b9c628a1d1329c5bf4d36fe4435c6501efc8", overwrit
 
 ```{r}
 
-rm(list = "")
-
 
 ```
 
@@ -127,6 +125,7 @@ variables = c(medi_house_income = "B19013_001", population = "B01003_001", medi_
 ### Trying to get poverty data####
 
 B17001_001 #POVERTY STATUS IN THE PAST 12 MONTHS BY SEX BY AGE
+
 get_acs(geography = "place",
               variables = c(poverty_status = "B17001_001"),
               state = "MD",
@@ -146,8 +145,6 @@ get_acs(geography = "place",
 
 ```
 
-```
-
 ```{r}
 
 ### Maybe we can take a look here and see how many people have Bachelor's Degrees vs Not ### 
@@ -155,12 +152,14 @@ get_acs(geography = "place",
 ##Use this section to look at Education Data##
 
 #HS grad (includes equivlency)
-htown_hsgrad <-  get_acs(geography = "place",
-              variables = c(hsgrad = "B06009_003"),
+get_acs(geography = "place",
+              variables = c(HSgrad = "B06009_003"),
               state = "MD",
               year = 2021) %>% 
   filter(NAME == "Hagerstown city, Maryland") %>% 
   mutate(year = 2021)
+
+```
 
 #graduate or professional degree
  get_acs(geography = "place",
