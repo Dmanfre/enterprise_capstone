@@ -15,7 +15,7 @@ library(tidyverse)
 library(tidycensus)
 library(janitor)
 library(lubridate)
-install.packages("ipumsr")
+#install.packages("ipumsr")
 library(ipumsr)
 
 ```
@@ -113,7 +113,15 @@ variables = c(medi_house_income = "B19013_001", population = "B01003_001", medi_
 
 #Aberdeen - need 2002 + 2021
 a_2021 <- get_acs(geography = "place",
-variables = c(medi_house_income = "B19013_001", population = "B01003_001", medi_home_value = "B25077_001", housing_occupied = "B25002_002", housing_vacancies = "B25002_003", labor_total = "B23025_003", labor_employed = "B23025_004", labor_unemployed = "B23025_005"),              state = "MD",
+variables = c(medi_house_income = "B19013_001",
+              population = "B01003_001", 
+              medi_home_value = "B25077_001", 
+              housing_occupied = "B25002_002", 
+              housing_vacancies = "B25002_003", 
+              labor_total = "B23025_003", 
+              labor_employed = "B23025_004", 
+              labor_unemployed = "B23025_005"),             
+state = "MD",
               year = 2021) %>% 
   filter(NAME == "Aberdeen city, Maryland") %>% 
   mutate(year = 2021)
