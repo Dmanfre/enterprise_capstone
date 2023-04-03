@@ -15,6 +15,8 @@ library(tidyverse)
 library(tidycensus)
 library(janitor)
 library(lubridate)
+#install.packages("ipumsr")
+library(ipumsr)
 
 ```
 
@@ -32,12 +34,6 @@ Sys.setenv(CENSUS_API_KEY = "5cb2b9c628a1d1329c5bf4d36fe4435c6501efc8", overwrit
 
 ```{r}
 
-
-```
-
-
-```{r}
-
 #Reference tables
 
 #Load ACS crosswalk
@@ -50,6 +46,17 @@ md_cities <- get_acs(geography = "place",
               variables = c(medi_house_income = "B19013_001"),
               state = "MD")
 
+# Load census crosswalks
+census_2000_1 <- load_variables(2000, "sf1")
+census_2000_2 <- load_variables(2000, "sf2")
+census_2000 <-  bind_rows(census_2000_1, census_2000_2)
+
+census_2010_1 <- load_variables(2010, "sf1")
+census_2010_2 <- load_variables(2010, "sf2")
+census_2010 <-  bind_rows(census_2010_1, census_2010_2)
+
+census_1990_1 <- load_variables(1990, "sf1")
+
 ```
 
 
@@ -59,7 +66,7 @@ md_cities <- get_acs(geography = "place",
 
 #Hagerstown
 h_2021 <- get_acs(geography = "place",
-              variables = c(medi_house_income = "B19013_001", population = "B01003_001", medi_home_value = "B25077_001"),
+              variables = c(medi_house_income = "B19013_001", population = "B01003_001", medi_home_value = "B25077_001", occupied = "B25002_002", vacancies = "B25002_003"),
               state = "MD",
               year = 2021) %>% 
   filter(NAME == "Hagerstown city, Maryland") %>% 
@@ -68,7 +75,7 @@ h_2021 <- get_acs(geography = "place",
 #Frederick - will likely use 1990 + 2021
 #We would like 1990 because that's when the ballpark opened; how do we do this?
 f_2021 <- get_acs(geography = "place",
-              variables = c(medi_house_income = "B19013_001", population = "B01003_001", medi_home_value = "B25077_001"),
+              variables = c(medi_house_income = "B19013_001", population = "B01003_001", medi_home_value = "B25077_001", occupied = "B25002_002", vacancies = "B25002_003"),
               state = "MD",
               year = 2021) %>% 
   filter(NAME == "Frederick city, Maryland") %>% 
@@ -76,7 +83,7 @@ f_2021 <- get_acs(geography = "place",
 
 #Waldorf - need 2008 + 2021
 w_2021 <- get_acs(geography = "place",
-                variables = c(medi_house_income = "B19013_001", population = "B01003_001", medi_home_value = "B25077_001"),              
+                variables = c(medi_house_income = "B19013_001", population = "B01003_001", medi_home_value = "B25077_001", occupied = "B25002_002", vacancies = "B25002_003"),              
               state = "MD",
               year = 2021) %>% 
   filter(NAME == "Waldorf CDP, Maryland") %>% 
@@ -84,7 +91,7 @@ w_2021 <- get_acs(geography = "place",
 
 #Bowie - need 1994 + 2021
 bo_2021 <- get_acs(geography = "place",
-              variables = c(medi_house_income = "B19013_001", population = "B01003_001", medi_home_value = "B25077_001"),              
+              variables = c(medi_house_income = "B19013_001", population = "B01003_001", medi_home_value = "B25077_001", occupied = "B25002_002", vacancies = "B25002_003"),              
               state = "MD",
               year = 2021) %>% 
   filter(NAME == "Bowie city, Maryland") %>% 
@@ -92,21 +99,21 @@ bo_2021 <- get_acs(geography = "place",
 
 #Salisbury - need 1996 + 2021
 s_2021 <- get_acs(geography = "place",
-variables = c(medi_house_income = "B19013_001", population = "B01003_001", medi_home_value = "B25077_001"),              state = "MD",
+variables = c(medi_house_income = "B19013_001", population = "B01003_001", medi_home_value = "B25077_001", occupied = "B25002_002", vacancies = "B25002_003"),state = "MD",
               year = 2021) %>% 
   filter(NAME == "Salisbury city, Maryland") %>% 
   mutate(year = 2021)
 
 #Baltimore - need 1992 + 2021
 ba_2021 <- get_acs(geography = "place",
-variables = c(medi_house_income = "B19013_001", population = "B01003_001", medi_home_value = "B25077_001"),              state = "MD",
+variables = c(medi_house_income = "B19013_001", population = "B01003_001", medi_home_value = "B25077_001", occupied = "B25002_002", vacancies = "B25002_003"),              state = "MD",
               year = 2021) %>% 
   filter(NAME == "Baltimore city, Maryland") %>% 
   mutate(year = 2021)
 
 #Aberdeen - need 2002 + 2021
 a_2021 <- get_acs(geography = "place",
-variables = c(medi_house_income = "B19013_001", population = "B01003_001", medi_home_value = "B25077_001"),              state = "MD",
+variables = c(medi_house_income = "B19013_001", population = "B01003_001", medi_home_value = "B25077_001", occupied = "B25002_002", vacancies = "B25002_003"),              state = "MD",
               year = 2021) %>% 
   filter(NAME == "Aberdeen city, Maryland") %>% 
   mutate(year = 2021)
@@ -118,6 +125,14 @@ variables = c(medi_house_income = "B19013_001", population = "B01003_001", medi_
 #write_csv(htown_medi_house_income, file = "htown_medi_house_income.csv")
 #write_csv(htown_medi_house_income, file = "fred_medi_house_income.csv")
 
+
+```
+
+```{r}
+
+#TESTING DICENNIAL CENSUS
+
+get_decennial()
 
 ```
 
