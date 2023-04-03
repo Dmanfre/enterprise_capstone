@@ -151,13 +151,14 @@ get_acs(geography = "place",
 
 ##Use this section to look at Education Data##
 
-#HS grad (includes equivlency)
+#Total HS grad (includes equivlency)
 get_acs(geography = "place",
-              variables = c(HSgrad = "B06009_003"),
+              variables = c(BAdegreee = "B06009_005"),
               state = "MD",
               year = 2021) %>% 
   filter(NAME == "Hagerstown city, Maryland") %>% 
   mutate(year = 2021)
+#This says only 3506 people have bachelor's degrees in Hagerstown... pretty low. 
 
 ```
 
