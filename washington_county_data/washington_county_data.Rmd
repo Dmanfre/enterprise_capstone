@@ -66,7 +66,14 @@ census_2010 <-  bind_rows(census_2010_1, census_2010_2)
 
 #Hagerstown
 h_2021 <- get_acs(geography = "place",
-              variables = c(medi_house_income = "B19013_001", population = "B01003_001", medi_home_value = "B25077_001", housing_occupied = "B25002_002", housing_vacancies = "B25002_003", labor_total = "B23025_003", labor_employed = "B23025_004", labor_unemployed = "B23025_005"),
+              variables = c(medi_house_income = "B19013_001", 
+                            population = "B01003_001", 
+                            medi_home_value = "B25077_001", 
+                            housing_occupied = "B25002_002",
+                            housing_vacancies = "B25002_003", 
+                            labor_total = "B23025_003", 
+                            labor_employed = "B23025_004", 
+                            labor_unemployed = "B23025_005"),
               state = "MD",
               year = 2021) %>% 
   filter(NAME == "Hagerstown city, Maryland") %>% 
@@ -177,7 +184,7 @@ state = "MD",
 
 #TESTING DICENNIAL CENSUS
 
-get_decennial()
+#get_decennial()
 
 ```
 
