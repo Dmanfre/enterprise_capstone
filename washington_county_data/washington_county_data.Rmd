@@ -205,7 +205,7 @@ variables = c(medi_house_income = "B19013_001",
                             housing_occupied = "B25002_002",
                             housing_vacancies = "B25002_003", 
                             labor_total = "B23025_003", 
-                            labor_employed = "B23025_004", 
+                            labor_employed = "B23025_004", #there is an error here saying this one was not found...
                             labor_unemployed = "B23025_005",
                             education_total = "B15003_001",
                             education_hs = "B15003_017",
