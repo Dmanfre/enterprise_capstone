@@ -305,6 +305,16 @@ get_acs(geography = "place",
   mutate(year = 2021)
 #This says only 3506 people have bachelor's degrees in Hagerstown... pretty low. 
 
+#B29002_005 Estimate!!Total:!!Some college, no degree
+
+get_acs(geography = "place",
+              variables = c(some_college_no_degree = "B29002_005"),
+              state = "MD",
+              year = 2021) %>% 
+  filter(NAME == "Hagerstown city, Maryland") %>% 
+  mutate(year = 2021)
+## 7035 people in Hagerstown with some college experience but no degree. 
+
 ```
 
 #graduate or professional degree
