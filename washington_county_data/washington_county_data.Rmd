@@ -91,10 +91,10 @@ h_2021 <- get_acs(geography = "place",
               year = 2021) %>% 
   filter(NAME == "Hagerstown city, Maryland") %>% 
   mutate(year = 2021)
-
+ 
 #Frederick - will likely use 1990 + 2021
 #We would like 1990 because that's when the ballpark opened; how do we do this?
-f_2021 <- get_acs(geography = "place",
+f_2021 <- get_acs(geography = "place", 
               variables = c(medi_house_income = "B19013_001", 
                             population = "B01003_001", 
                             medi_home_value = "B25077_001", 
