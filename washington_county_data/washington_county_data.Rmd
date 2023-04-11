@@ -291,7 +291,6 @@ get_acs(geography = "place",
 ```
 
 ```{r}
-
 ### Maybe we can take a look here and see how many people have Bachelor's Degrees vs Not ### 
 
 ##Use this section to look at Education Data##
@@ -313,7 +312,28 @@ get_acs(geography = "place",
               year = 2021) %>% 
   filter(NAME == "Hagerstown city, Maryland") %>% 
   mutate(year = 2021)
-## 7035 people in Hagerstown with some college experience but no degree. 
+## 7035 people in Hagerstown with some college experience but no degree.
+```
+
+
+```{r}
+## Is it worth getting these numbers of people who are enrolled in certain grade levels? Could be interesting to see because these people may be the ones working at the ballpark##
+
+B14007_001 ==SCHOOL ENROLLMENT BY DETAILED  LEVEL OF SCHOOL FOR THE POPULATION 3 YEARS AND OVER
+
+grade_9_to_12 <- get_acs(geography = "place",
+              variables = c(total_school_enrolled = "B14007_002",
+                            grade_9 = "B14007_013",
+                            grade_10 = "B14007_014",
+                            grade_11 = "B14007_015",
+                            grade_12 = "B14007_016"
+                            ),
+              state = "MD",
+              year = 2021) %>% 
+  filter(NAME == "Hagerstown city, Maryland") %>% 
+  mutate(year = 2021)
+
+write_csv(grade_9_to_12, file = "grade_9_to_12.csv")
 
 ```
 

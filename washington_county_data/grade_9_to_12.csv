@@ -1,0 +1,6 @@
+GEOID,NAME,variable,estimate,moe,year
+2436075,"Hagerstown city, Maryland",total_school_enrolled,10243,759,2021
+2436075,"Hagerstown city, Maryland",grade_9,585,170,2021
+2436075,"Hagerstown city, Maryland",grade_10,598,223,2021
+2436075,"Hagerstown city, Maryland",grade_11,359,131,2021
+2436075,"Hagerstown city, Maryland",grade_12,553,201,2021
