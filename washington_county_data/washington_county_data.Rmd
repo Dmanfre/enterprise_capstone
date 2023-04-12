@@ -86,7 +86,8 @@ h_2021 <- get_acs(geography = "place",
                             poverty_total = "B17020_001",
                             poverty_below = "B17020_002",
                             poverty_above = "B17020_010",
-                            rent = "B25064_001"),
+                            rent = "B25064_001",
+                            medi_real_estate_tax = "B25103_001"),
               state = "MD",
               year = 2021) %>% 
   filter(NAME == "Hagerstown city, Maryland") %>% 
@@ -113,7 +114,8 @@ f_2021 <- get_acs(geography = "place",
                             poverty_total = "B17020_001",
                             poverty_below = "B17020_002",
                             poverty_above = "B17020_010",
-                            rent = "B25064_001"),
+                            rent = "B25064_001",
+                            medi_real_estate_tax = "B25103_001"),
               state = "MD",
               year = 2021) %>% 
   filter(NAME == "Frederick city, Maryland") %>% 
@@ -139,7 +141,8 @@ w_2021 <- get_acs(geography = "place",
                             poverty_total = "B17020_001",
                             poverty_below = "B17020_002",
                             poverty_above = "B17020_010",
-                            rent = "B25064_001"),              
+                            rent = "B25064_001",
+                             medi_real_estate_tax = "B25103_001"),              
               state = "MD",
               year = 2021) %>% 
   filter(NAME == "Waldorf CDP, Maryland") %>% 
@@ -165,7 +168,8 @@ bo_2021 <- get_acs(geography = "place",
                             poverty_total = "B17020_001",
                             poverty_below = "B17020_002",
                             poverty_above = "B17020_010",
-                            rent = "B25064_001"),
+                            rent = "B25064_001", 
+                            medi_real_estate_tax = "B25103_001"),
               state = "MD",
               year = 2021) %>% 
   filter(NAME == "Bowie city, Maryland") %>% 
@@ -191,7 +195,9 @@ variables = c(medi_house_income = "B19013_001",
                             poverty_total = "B17020_001",
                             poverty_below = "B17020_002",
                             poverty_above = "B17020_010",
-                            rent = "B25064_001"),      state = "MD",
+                            rent = "B25064_001", 
+                            medi_real_estate_tax = "B25103_001"),      
+              state = "MD",
               year = 2021) %>% 
   filter(NAME == "Salisbury city, Maryland") %>% 
   mutate(year = 2021)
@@ -216,8 +222,9 @@ variables = c(medi_house_income = "B19013_001",
                             poverty_total = "B17020_001",
                             poverty_below = "B17020_002",
                             poverty_above = "B17020_010",
-                            rent = "B25064_001"),
-state = "MD",
+                            rent = "B25064_001",
+                           medi_real_estate_tax = "B25103_001"),
+              state = "MD",
               year = 2021) %>% 
   filter(NAME == "Baltimore city, Maryland") %>% 
   mutate(year = 2021)
@@ -242,7 +249,8 @@ variables = c(medi_house_income = "B19013_001",
                             poverty_total = "B17020_001",
                             poverty_below = "B17020_002",
                             poverty_above = "B17020_010",
-                            rent = "B25064_001"),
+                            rent = "B25064_001",
+                            medi_real_estate_tax = "B25103_001"),
 state = "MD",
               year = 2021) %>% 
   filter(NAME == "Aberdeen city, Maryland") %>% 
@@ -343,7 +351,7 @@ B25103_001 = median real estate taxes paid - total
 B25090_001 = Estimate!!Aggregate real estate taxes paid (dollars):
 
   get_acs(geography = "place",
-              variables = c(medi_real_estate_tax = "B25103_001" ),
+              variables = c(medi_real_estate_tax = "B25090_001" ),
               state = "MD",
               year = 2021) %>% 
   filter(NAME == "Hagerstown city, Maryland") %>% 
