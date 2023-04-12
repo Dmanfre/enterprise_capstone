@@ -332,8 +332,24 @@ grade_9_to_12 <- get_acs(geography = "place",
               year = 2021) %>% 
   filter(NAME == "Hagerstown city, Maryland") %>% 
   mutate(year = 2021)
+```
 
-write_csv(grade_9_to_12, file = "grade_9_to_12.csv")
+
+```{r}
+## Gathering codes for real estate taxes. 
+
+
+B25103_001 = median real estate taxes paid - total
+B25090_001 = Estimate!!Aggregate real estate taxes paid (dollars):
+
+  get_acs(geography = "place",
+              variables = c(medi_real_estate_tax = "B25103_001" ),
+              state = "MD",
+              year = 2021) %>% 
+  filter(NAME == "Hagerstown city, Maryland") %>% 
+  mutate(year = 2021)
+
+#write_csv(grade_9_to_12, file = "grade_9_to_12.csv")
 
 ```
 
