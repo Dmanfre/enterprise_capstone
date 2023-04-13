@@ -38,7 +38,7 @@ Sys.setenv(CENSUS_API_KEY = "5cb2b9c628a1d1329c5bf4d36fe4435c6501efc8", overwrit
 
 #Load ACS crosswalk
 
-ACS_5 <- load_variables(2020, "acs5")
+ACS_5 <- load_variables(2021, "acs5")
 #What is the difference between the ACS and the ACS5?
 
 # List of MD cities
@@ -87,7 +87,8 @@ h_2021 <- get_acs(geography = "place",
                             poverty_below = "B17020_002",
                             poverty_above = "B17020_010",
                             rent = "B25064_001",
-                            medi_real_estate_tax = "B25103_001"),
+                            real_estate_tax_median = "B25103_001",
+                            real_estate_tax_aggregate = "B25090_001"),
               state = "MD",
               year = 2021) %>% 
   filter(NAME == "Hagerstown city, Maryland") %>% 
@@ -115,7 +116,8 @@ f_2021 <- get_acs(geography = "place",
                             poverty_below = "B17020_002",
                             poverty_above = "B17020_010",
                             rent = "B25064_001",
-                            medi_real_estate_tax = "B25103_001"),
+                            real_estate_tax_median = "B25103_001",
+                            real_estate_tax_aggregate = "B25090_001"),
               state = "MD",
               year = 2021) %>% 
   filter(NAME == "Frederick city, Maryland") %>% 
@@ -142,7 +144,8 @@ w_2021 <- get_acs(geography = "place",
                             poverty_below = "B17020_002",
                             poverty_above = "B17020_010",
                             rent = "B25064_001",
-                             medi_real_estate_tax = "B25103_001"),              
+                            real_estate_tax_median = "B25103_001",
+                            real_estate_tax_aggregate = "B25090_001"),              
               state = "MD",
               year = 2021) %>% 
   filter(NAME == "Waldorf CDP, Maryland") %>% 
@@ -169,7 +172,8 @@ bo_2021 <- get_acs(geography = "place",
                             poverty_below = "B17020_002",
                             poverty_above = "B17020_010",
                             rent = "B25064_001", 
-                            medi_real_estate_tax = "B25103_001"),
+                            real_estate_tax_median = "B25103_001",
+                            real_estate_tax_aggregate = "B25090_001"),
               state = "MD",
               year = 2021) %>% 
   filter(NAME == "Bowie city, Maryland") %>% 
@@ -196,7 +200,8 @@ variables = c(medi_house_income = "B19013_001",
                             poverty_below = "B17020_002",
                             poverty_above = "B17020_010",
                             rent = "B25064_001", 
-                            medi_real_estate_tax = "B25103_001"),      
+                            real_estate_tax_median = "B25103_001",
+                            real_estate_tax_aggregate = "B25090_001"),      
               state = "MD",
               year = 2021) %>% 
   filter(NAME == "Salisbury city, Maryland") %>% 
@@ -204,26 +209,27 @@ variables = c(medi_house_income = "B19013_001",
 
 #Baltimore - need 1992 + 2021
 ba_2021 <- get_acs(geography = "place",
-variables = c(medi_house_income = "B19013_001", 
-                            population = "B01003_001", 
-                            medi_home_value = "B25077_001", 
-                            housing_total = "B25002_001",
-                            housing_occupied = "B25002_002",
-                            housing_vacancies = "B25002_003", 
-                            labor_total = "B23025_003", 
-                            labor_employed = "B23025_004", #there is an error here saying this one was not found...
-                            labor_unemployed = "B23025_005",
-                            education_total = "B15003_001",
-                            education_hs = "B15003_017",
-                            education_bachelors = "B15003_022",
-                            public_assistance_total = "B22003_001",
-                            public_assistance_received = "B22003_002",
-                            public_assistance_not_received = "B22003_005",
-                            poverty_total = "B17020_001",
-                            poverty_below = "B17020_002",
-                            poverty_above = "B17020_010",
-                            rent = "B25064_001",
-                           medi_real_estate_tax = "B25103_001"),
+variables = c(medi_house_income = "B19013_001",
+              population = "B01003_001",
+              medi_home_value = "B25077_001",
+              housing_total = "B25002_001",
+              housing_occupied = "B25002_002",
+              housing_vacancies = "B25002_003",
+              labor_total = "B23025_003",
+              labor_employed = "B23025_004",
+              labor_unemployed = "B23025_005",
+              education_total = "B15003_001",
+              education_hs = "B15003_017",
+              education_bachelors = "B15003_022",
+              public_assistance_total = "B22003_001",
+              public_assistance_received = "B22003_002",
+              public_assistance_not_received = "B22003_005",
+              poverty_total = "B17020_001",
+              poverty_below = "B17020_002",
+              poverty_above = "B17020_010",
+              rent = "B25064_001",
+              real_estate_tax_median = "B25103_001",
+              real_estate_tax_aggregate = "B25090_001"),
               state = "MD",
               year = 2021) %>% 
   filter(NAME == "Baltimore city, Maryland") %>% 
@@ -250,7 +256,8 @@ variables = c(medi_house_income = "B19013_001",
                             poverty_below = "B17020_002",
                             poverty_above = "B17020_010",
                             rent = "B25064_001",
-                            medi_real_estate_tax = "B25103_001"),
+                            real_estate_tax_median = "B25103_001",
+                            real_estate_tax_aggregate = "B25090_001"),
 state = "MD",
               year = 2021) %>% 
   filter(NAME == "Aberdeen city, Maryland") %>% 
