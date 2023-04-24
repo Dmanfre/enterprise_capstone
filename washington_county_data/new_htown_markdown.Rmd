@@ -189,9 +189,48 @@ w_2013 <- get_acs(geography = "place",
   filter(NAME == "Waldorf CDP, Maryland") %>% 
   mutate(year = 2013)
 
-# Waldorf 2009
+# Waldorf 2009... goal is to get 5-7 variables. 
 
 w_2009 <- get_acs(geography = "place",
+                variables = c(medi_house_income = "B19013_001", 
+                            population = "B01003_001", 
+                            medi_home_value = "B25077_001", 
+                            housing_total = "B25002_001",
+                            housing_occupied = "B25002_002",
+                            housing_vacancies = "B25002_003",
+                            education = "B15001_001E"), 
+              state = "MD",
+              year = 2009) %>% 
+  filter(NAME == "Waldorf CDP, Maryland") %>% 
+  mutate(year = 2009)
+# HELPFUL TO GET AN EDUCATION CODE, 
+
+
+                            #labor_total = "B23025_003", 
+                            #labor_employed = "B23025_004", 
+                            #labor_unemployed = "B23025_005",
+                            #education_total = "B15003_001",
+                            #education_hs = "B15003_017",
+                            #education_bachelors = "B15003_022",
+                            #public_assistance_total = "B22003_001",
+                            #public_assistance_received = "B22003_002",
+                            #public_assistance_not_received = "B22003_005",
+                            #poverty_total = "B17020_001",
+                            #poverty_below = "B17020_002",
+                            #poverty_above = "B17020_010",
+                            #rent = "B25064_001",
+                            #real_estate_tax_median = "B25103_001",
+                            #real_estate_tax_aggregate = "B25090_001"
+
+# (Error: Your API call has errors. The API message returned is error: error: unknown variable B23025_003E) However this variable does not show up anywhere. This variable doesn't even show up in the ACS.
+
+```
+
+
+```{r}
+
+# Charles County data from 2018
+charles_2018 <- get_acs(geography = "county",
                 variables = c(medi_house_income = "B19013_001", 
                             population = "B01003_001", 
                             medi_home_value = "B25077_001", 
@@ -214,15 +253,37 @@ w_2009 <- get_acs(geography = "place",
                             real_estate_tax_median = "B25103_001",
                             real_estate_tax_aggregate = "B25090_001"),              
               state = "MD",
-              year = 2009) %>% 
-  filter(NAME == "Waldorf CDP, Maryland") %>% 
-  mutate(year = 2009)
+              year = 2018) %>% 
+  filter(NAME == "Charles County, Maryland") %>% 
+  mutate(year = 2018)
 
-B23025_003E
 
-# (Error: Your API call has errors. The API message returned is error: error: unknown variable B23025_003E) However this variable does not show up anywhere. This variable doesn't even show up in the ACS.
+charles_2018 <- get_acs(geography = "county",
+                variables = c(medi_house_income = "B19013_001", 
+                            population = "B01003_001", 
+                            medi_home_value = "B25077_001", 
+                            housing_total = "B25002_001",
+                            housing_occupied = "B25002_002",
+                            housing_vacancies = "B25002_003", 
+                            labor_total = "B23025_003", 
+                            labor_employed = "B23025_004", 
+                            labor_unemployed = "B23025_005",
+                            education_total = "B15003_001",
+                            education_hs = "B15003_017",
+                            education_bachelors = "B15003_022",
+                            public_assistance_total = "B22003_001",
+                            public_assistance_received = "B22003_002",
+                            public_assistance_not_received = "B22003_005",
+                            poverty_total = "B17020_001",
+                            poverty_below = "B17020_002",
+                            poverty_above = "B17020_010",
+                            rent = "B25064_001",
+                            real_estate_tax_median = "B25103_001",
+                            real_estate_tax_aggregate = "B25090_001"),              
+              state = "MD",
+              year = 2018) %>% 
+  filter(NAME == "Charles County, Maryland") %>% 
+  mutate(year = 2018)
 
 ```
-
-
 
