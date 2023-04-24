@@ -218,7 +218,9 @@ w_2009 <- get_acs(geography = "place",
   filter(NAME == "Waldorf CDP, Maryland") %>% 
   mutate(year = 2009)
 
-# (Error: Your API call has errors. The API message returned is error: error: unknown variable  ) However this variable does not show up anywhere. This variable doesn't even show up in the ACS.
+B23025_003E
+
+# (Error: Your API call has errors. The API message returned is error: error: unknown variable B23025_003E) However this variable does not show up anywhere. This variable doesn't even show up in the ACS.
 
 ```
 
