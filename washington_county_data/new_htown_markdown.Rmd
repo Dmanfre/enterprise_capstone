@@ -36,45 +36,47 @@ Sys.setenv(CENSUS_API_KEY = "5cb2b9c628a1d1329c5bf4d36fe4435c6501efc8", overwrit
 
 #Load ACS crosswalk
 
-ACS_5 <- load_variables(2021, "acs5")
-#What is the difference between the ACS and the ACS5?
-
-ACS_2008 <- load_variables(2008, "acs1")
-
-ACS_2010 <- load_variables(2010, "acs1")
-
-ACS_2008 <- load_variables(2008, "acs1")
-
-# List of MD cities
-md_cities <- get_acs(geography = "place",
-              variables = c(medi_house_income = "B19013_001"),
-              state = "MD")
-
-# Load census crosswalks
-census_2000_1 <- load_variables(2000, "sf1")
-census_2000_2 <- load_variables(2000, "sf2")
-census_2000 <-  bind_rows(census_2000_1, census_2000_2)
-rm(census_2000_1, census_2000_2)
-
-census_2010_1 <- load_variables(2010, "sf1")
-census_2010_2 <- load_variables(2010, "sf2")
-census_2010 <-  bind_rows(census_2010_1, census_2010_2)
-rm(census_2010_1, census_2010_2)
-
-#census_1990_1 <- load_variables(1990, "sf1")
+ACS_2021 <- load_variables(2021, "acs5")
+ACS_2018 <- load_variables(2018, "acs5")
+ACS_2013 <- load_variables(2018, "acs5")
+ACS_2009 <- load_variables(2009, "acs5")
+ACS_2008 <- load_variables(2008, "acs3")
+ACS_2007 <- load_variables(2007, "acs3")
 
 ```
 
 ```{r}
+# CODE BLOCKS FOR STATE 
 
-CODE BLOCKS FOR STATE 
-
-#2009
-
-
+#2007
+md_2007 <- get_acs(geography = "state",
+                variables = c(medi_house_income = "B19013_001", 
+                            population = "B01003_001", 
+                            medi_home_value = "B25077_001", 
+                            housing_total = "B25002_001",
+                            housing_occupied = "B25002_002",
+                            housing_vacancies = "B25002_003", 
+                            #labor_total = "B23025_003", 
+                            #labor_employed = "B23025_004", 
+                            #labor_unemployed = "B23025_005",
+                            #education_total = "B15003_001",
+                            #education_hs = "B15003_017",
+                            #education_bachelors = "B15003_022",
+                            public_assistance_total = "B22003_001",
+                            public_assistance_received = "B22003_002",
+                            public_assistance_not_received = "B22003_005",
+                            #poverty_total = "B17020_001",
+                            #poverty_below = "B17020_002",
+                            #poverty_above = "B17020_010",
+                            rent = "B25064_001",
+                            real_estate_tax_median = "B25103_001"),
+                            #real_estate_tax_aggregate = "B25090_001"),       
+              survey = "acs3",
+              state = "MD",
+              year = 2007) %>% 
+  mutate(year = 2007)
 
 #2013
-
 md_2013 <- get_acs(geography = "state",
                 variables = c(medi_house_income = "B19013_001", 
                             population = "B01003_001", 
@@ -96,14 +98,12 @@ md_2013 <- get_acs(geography = "state",
                             poverty_above = "B17020_010",
                             rent = "B25064_001",
                             real_estate_tax_median = "B25103_001",
-                            real_estate_tax_aggregate = "B25090_001"),              
+                            real_estate_tax_aggregate = "B25090_001"),        
               state = "MD",
               year = 2013) %>% 
   mutate(year = 2013)
 
-
 #2018
-# Maryland data from 2018
 md_2018 <- get_acs(geography = "state",
                 variables = c(medi_house_income = "B19013_001", 
                             population = "B01003_001", 
@@ -125,79 +125,9 @@ md_2018 <- get_acs(geography = "state",
                             poverty_above = "B17020_010",
                             rent = "B25064_001",
                             real_estate_tax_median = "B25103_001",
-                            real_estate_tax_aggregate = "B25090_001"),              
+                            real_estate_tax_aggregate = "B25090_001"),        
               state = "MD",
               year = 2018) %>% 
-  mutate(year = 2018)
-
-
-
-
-```
-
-
-
-```{r}
-CODE BLOCKS FOR ZIP CODES
-# Waldorf Zip is 20602
-
-2009
-
-#2013
-zip_2013 <- get_acs(geography = "zip code tabulation area",
-                variables = c(medi_house_income = "B19013_001", 
-                            population = "B01003_001", 
-                            medi_home_value = "B25077_001", 
-                            housing_total = "B25002_001",
-                            housing_occupied = "B25002_002",
-                            housing_vacancies = "B25002_003", 
-                            labor_total = "B23025_003", 
-                            labor_employed = "B23025_004", 
-                            labor_unemployed = "B23025_005",
-                            education_total = "B15003_001",
-                            education_hs = "B15003_017",
-                            education_bachelors = "B15003_022",
-                            public_assistance_total = "B22003_001",
-                            public_assistance_received = "B22003_002",
-                            public_assistance_not_received = "B22003_005",
-                            poverty_total = "B17020_001",
-                            poverty_below = "B17020_002",
-                            poverty_above = "B17020_010",
-                            rent = "B25064_001",
-                            real_estate_tax_median = "B25103_001",
-                            real_estate_tax_aggregate = "B25090_001"),
-              state = "MD",
-              year = 2013) %>%
-              filter( GEOID == "20602") %>% 
-  mutate(year = 2013)
-
-
-#2018
-zip_2018 <- get_acs(geography = "zip code tabulation area",
-                variables = c(medi_house_income = "B19013_001", 
-                            population = "B01003_001", 
-                            medi_home_value = "B25077_001", 
-                            housing_total = "B25002_001",
-                            housing_occupied = "B25002_002",
-                            housing_vacancies = "B25002_003", 
-                            labor_total = "B23025_003", 
-                            labor_employed = "B23025_004", 
-                            labor_unemployed = "B23025_005",
-                            education_total = "B15003_001",
-                            education_hs = "B15003_017",
-                            education_bachelors = "B15003_022",
-                            public_assistance_total = "B22003_001",
-                            public_assistance_received = "B22003_002",
-                            public_assistance_not_received = "B22003_005",
-                            poverty_total = "B17020_001",
-                            poverty_below = "B17020_002",
-                            poverty_above = "B17020_010",
-                            rent = "B25064_001",
-                            real_estate_tax_median = "B25103_001",
-                            real_estate_tax_aggregate = "B25090_001"),
-              state = "MD",
-              year = 2018) %>%
-              filter( GEOID == "20602") %>% 
   mutate(year = 2018)
 
 
@@ -207,10 +137,36 @@ zip_2018 <- get_acs(geography = "zip code tabulation area",
 ```{r}
 #CODE BLOCKS FOR COUNTY
 
-2009
+#2007
+charles_2007 <- get_acs(geography = "county",
+                variables = c(medi_house_income = "B19013_001", 
+                            population = "B01003_001", 
+                            medi_home_value = "B25077_001", 
+                            housing_total = "B25002_001",
+                            housing_occupied = "B25002_002",
+                            housing_vacancies = "B25002_003", 
+                            #labor_total = "B23025_003", 
+                            #labor_employed = "B23025_004", 
+                            #labor_unemployed = "B23025_005",
+                            #education_total = "B15003_001",
+                            #education_hs = "B15003_017",
+                            #education_bachelors = "B15003_022",
+                            public_assistance_total = "B22003_001",
+                            public_assistance_received = "B22003_002",
+                            public_assistance_not_received = "B22003_005",
+                            #poverty_total = "B17020_001",
+                            #poverty_below = "B17020_002",
+                            #poverty_above = "B17020_010",
+                            rent = "B25064_001",
+                            real_estate_tax_median = "B25103_001"),
+                            #real_estate_tax_aggregate = "B25090_001"),
+              survey = "acs3",
+              state = "MD",
+              year = 2007) %>% 
+  filter(NAME == "Charles County, Maryland") %>% 
+  mutate(year = 2007)
 
 #2013
-
 charles_2013 <- get_acs(geography = "county",
                 variables = c(medi_house_income = "B19013_001", 
                             population = "B01003_001", 
@@ -238,10 +194,7 @@ charles_2013 <- get_acs(geography = "county",
   filter(NAME == "Charles County, Maryland") %>% 
   mutate(year = 2013)
 
-
 #2018
-
-# Charles County data from 2018
 charles_2018 <- get_acs(geography = "county",
                 variables = c(medi_house_income = "B19013_001", 
                             population = "B01003_001", 
@@ -269,8 +222,6 @@ charles_2018 <- get_acs(geography = "county",
   filter(NAME == "Charles County, Maryland") %>% 
   mutate(year = 2018)
 
-
-
 ```
 
 
@@ -278,12 +229,36 @@ charles_2018 <- get_acs(geography = "county",
 
 #CODE BLOCKS FOR CITY
 
-#2009
-
-
+#2007
+w_2007 <- get_acs(geography = "place",
+                variables = c(medi_house_income = "B19013_001", 
+                            population = "B01003_001", 
+                            medi_home_value = "B25077_001", 
+                            housing_total = "B25002_001",
+                            housing_occupied = "B25002_002",
+                            housing_vacancies = "B25002_003", 
+                            #labor_total = "B23025_003", 
+                            #labor_employed = "B23025_004", 
+                            #labor_unemployed = "B23025_005",
+                            #education_total = "B15003_001",
+                            #education_hs = "B15003_017",
+                            #education_bachelors = "B15003_022",
+                            public_assistance_total = "B22003_001",
+                            public_assistance_received = "B22003_002",
+                            public_assistance_not_received = "B22003_005",
+                            #poverty_total = "B17020_001",
+                            #poverty_below = "B17020_002",
+                            #poverty_above = "B17020_010",
+                            rent = "B25064_001",
+                            real_estate_tax_median = "B25103_001"),
+                            #real_estate_tax_aggregate = "B25090_001"),        
+              survey = "acs3",
+              state = "MD",
+              year = 2007) %>% 
+  filter(NAME == "Waldorf CDP, Maryland") %>% 
+  mutate(year = 2007)
 
 #2013
-
 w_2013 <- get_acs(geography = "place",
                 variables = c(medi_house_income = "B19013_001", 
                             population = "B01003_001", 
@@ -305,14 +280,13 @@ w_2013 <- get_acs(geography = "place",
                             poverty_above = "B17020_010",
                             rent = "B25064_001",
                             real_estate_tax_median = "B25103_001",
-                            real_estate_tax_aggregate = "B25090_001"),              
+                            real_estate_tax_aggregate = "B25090_001"),        
               state = "MD",
               year = 2013) %>% 
   filter(NAME == "Waldorf CDP, Maryland") %>% 
   mutate(year = 2013)
 
 #2018
-
 w_2018 <- get_acs(geography = "place",
                 variables = c(medi_house_income = "B19013_001", 
                             population = "B01003_001", 
@@ -334,16 +308,88 @@ w_2018 <- get_acs(geography = "place",
                             poverty_above = "B17020_010",
                             rent = "B25064_001",
                             real_estate_tax_median = "B25103_001",
-                            real_estate_tax_aggregate = "B25090_001"),              
+                            real_estate_tax_aggregate = "B25090_001"),        
               state = "MD",
               year = 2018) %>% 
   filter(NAME == "Waldorf CDP, Maryland") %>% 
   mutate(year = 2018)
 
+```
 
+```{r}
+#CODE BLOCKS FOR ZIP CODES
+# Waldorf Zip is 20602
+# We may have to reconsider this. ACS data does not seem to be available at zip code level until 2011. Might experiment with other small geographies like census tracts or school districts.
+
+#2007
+# May not be possible because ACS3 not available for ZCTA. Must use ACS5 or decennial census.
+
+#2008
+# May not be possible because ACS3 not available for ZCTA. Must use ACS5 or decennial census.
+
+#2009
+# May not be possible because ACS5 not available for ZCTA. Must use ACS5 from 2011 or 2010 decennial census.
+
+#2013
+zip_2013 <- get_acs(geography = "zip code tabulation area",
+                variables = c(medi_house_income = "B19013_001", 
+                            population = "B01003_001", 
+                            medi_home_value = "B25077_001", 
+                            housing_total = "B25002_001",
+                            housing_occupied = "B25002_002",
+                            housing_vacancies = "B25002_003", 
+                            labor_total = "B23025_003", 
+                            labor_employed = "B23025_004", 
+                            labor_unemployed = "B23025_005",
+                            education_total = "B15003_001",
+                            education_hs = "B15003_017",
+                            education_bachelors = "B15003_022",
+                            public_assistance_total = "B22003_001",
+                            public_assistance_received = "B22003_002",
+                            public_assistance_not_received = "B22003_005",
+                            poverty_total = "B17020_001",
+                            poverty_below = "B17020_002",
+                            poverty_above = "B17020_010",
+                            rent = "B25064_001",
+                            real_estate_tax_median = "B25103_001",
+                            real_estate_tax_aggregate = "B25090_001"),
+              state = "MD",
+              year = 2013) %>%
+              filter(GEOID == "20602") %>% 
+  mutate(year = 2013)
+
+#2018
+zip_2018 <- get_acs(geography = "zip code tabulation area",
+                variables = c(medi_house_income = "B19013_001", 
+                            population = "B01003_001", 
+                            medi_home_value = "B25077_001", 
+                            housing_total = "B25002_001",
+                            housing_occupied = "B25002_002",
+                            housing_vacancies = "B25002_003", 
+                            labor_total = "B23025_003", 
+                            labor_employed = "B23025_004", 
+                            labor_unemployed = "B23025_005",
+                            education_total = "B15003_001",
+                            education_hs = "B15003_017",
+                            education_bachelors = "B15003_022",
+                            public_assistance_total = "B22003_001",
+                            public_assistance_received = "B22003_002",
+                            public_assistance_not_received = "B22003_005",
+                            poverty_total = "B17020_001",
+                            poverty_below = "B17020_002",
+                            poverty_above = "B17020_010",
+                            rent = "B25064_001",
+                            real_estate_tax_median = "B25103_001",
+                            real_estate_tax_aggregate = "B25090_001"),
+              state = "MD",
+              year = 2018) %>%
+              filter(GEOID == "20602") %>% 
+  mutate(year = 2018)
 
 
 ```
+
+
 
 
 
