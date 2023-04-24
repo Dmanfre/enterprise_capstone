@@ -139,14 +139,12 @@ md_2018 <- get_acs(geography = "state",
 
 ```{r}
 CODE BLOCKS FOR ZIP CODES
+# Waldorf Zip is 20602
 
 2009
 
-2013
-
-2018
-
-zip_2018 <- get_acs(geography = "ZCTA5",
+#2013
+zip_2013 <- get_acs(geography = "zip code tabulation area",
                 variables = c(medi_house_income = "B19013_001", 
                             population = "B01003_001", 
                             medi_home_value = "B25077_001", 
@@ -167,14 +165,40 @@ zip_2018 <- get_acs(geography = "ZCTA5",
                             poverty_above = "B17020_010",
                             rent = "B25064_001",
                             real_estate_tax_median = "B25103_001",
-                            real_estate_tax_aggregate = "B25090_001"),          
+                            real_estate_tax_aggregate = "B25090_001"),
               state = "MD",
-              year = 2018) %>% 
-  filter(NAME == "20601") %>% 
+              year = 2013) %>%
+              filter( GEOID == "20602") %>% 
+  mutate(year = 2013)
+
+
+#2018
+zip_2018 <- get_acs(geography = "zip code tabulation area",
+                variables = c(medi_house_income = "B19013_001", 
+                            population = "B01003_001", 
+                            medi_home_value = "B25077_001", 
+                            housing_total = "B25002_001",
+                            housing_occupied = "B25002_002",
+                            housing_vacancies = "B25002_003", 
+                            labor_total = "B23025_003", 
+                            labor_employed = "B23025_004", 
+                            labor_unemployed = "B23025_005",
+                            education_total = "B15003_001",
+                            education_hs = "B15003_017",
+                            education_bachelors = "B15003_022",
+                            public_assistance_total = "B22003_001",
+                            public_assistance_received = "B22003_002",
+                            public_assistance_not_received = "B22003_005",
+                            poverty_total = "B17020_001",
+                            poverty_below = "B17020_002",
+                            poverty_above = "B17020_010",
+                            rent = "B25064_001",
+                            real_estate_tax_median = "B25103_001",
+                            real_estate_tax_aggregate = "B25090_001"),
+              state = "MD",
+              year = 2018) %>%
+              filter( GEOID == "20602") %>% 
   mutate(year = 2018)
-
-
-
 
 
 ```
