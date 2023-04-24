@@ -1,0 +1,224 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+```{r}
+#libraries
+library(tidyverse)
+library(tidycensus)
+library(janitor)
+library(lubridate)
+#install.packages("ipumsr")
+library(ipumsr)
+
+```
+
+```{r}
+
+# Load Census API key
+
+Sys.setenv(CENSUS_API_KEY = "5cb2b9c628a1d1329c5bf4d36fe4435c6501efc8", overwrite = TRUE)
+
+# is using acs 5'
+#when writing this make it say that these numbers are based on five-year rolling averages...
+
+
+```
+
+```{r}
+
+#Reference tables
+
+#Load ACS crosswalk
+
+ACS_5 <- load_variables(2021, "acs5")
+#What is the difference between the ACS and the ACS5?
+
+ACS_2010 <- load_variables(2010, "acs1")
+
+ACS_2008 <- load_variables(2008, "acs1")
+
+# List of MD cities
+md_cities <- get_acs(geography = "place",
+              variables = c(medi_house_income = "B19013_001"),
+              state = "MD")
+
+# Load census crosswalks
+census_2000_1 <- load_variables(2000, "sf1")
+census_2000_2 <- load_variables(2000, "sf2")
+census_2000 <-  bind_rows(census_2000_1, census_2000_2)
+rm(census_2000_1, census_2000_2)
+
+census_2010_1 <- load_variables(2010, "sf1")
+census_2010_2 <- load_variables(2010, "sf2")
+census_2010 <-  bind_rows(census_2010_1, census_2010_2)
+rm(census_2010_1, census_2010_2)
+
+#census_1990_1 <- load_variables(1990, "sf1")
+
+```
+
+```{r}
+## Notes:
+## labor_ variables are for age 16+
+## education_ variables are for age 25+
+## rent variables are median gross rent
+
+#Hagerstown
+h_2021 <- get_acs(geography = "place",
+              variables = c(medi_house_income = "B19013_001", 
+                            population = "B01003_001", 
+                            medi_home_value = "B25077_001", 
+                            housing_total = "B25002_001",
+                            housing_occupied = "B25002_002",
+                            housing_vacancies = "B25002_003", 
+                            labor_total = "B23025_003", 
+                            labor_employed = "B23025_004", 
+                            labor_unemployed = "B23025_005",
+                            education_total = "B15003_001",
+                            education_hs = "B15003_017",
+                            education_bachelors = "B15003_022",
+                            public_assistance_total = "B22003_001",
+                            public_assistance_received = "B22003_002",
+                            public_assistance_not_received = "B22003_005",
+                            poverty_total = "B17020_001",
+                            poverty_below = "B17020_002",
+                            poverty_above = "B17020_010",
+                            rent = "B25064_001",
+                            real_estate_tax_median = "B25103_001",
+                            real_estate_tax_aggregate = "B25090_001"),
+              state = "MD",
+              year = 2021) %>% 
+  filter(NAME == "Hagerstown city, Maryland") %>% 
+  mutate(year = 2021)
+
+
+
+```
+
+```{r}
+#Waldorf - need 2008 + 2021
+w_2021 <- get_acs(geography = "place",
+                variables = c(medi_house_income = "B19013_001", 
+                            population = "B01003_001", 
+                            medi_home_value = "B25077_001", 
+                            housing_total = "B25002_001",
+                            housing_occupied = "B25002_002",
+                            housing_vacancies = "B25002_003", 
+                            labor_total = "B23025_003", 
+                            labor_employed = "B23025_004", 
+                            labor_unemployed = "B23025_005",
+                            education_total = "B15003_001",
+                            education_hs = "B15003_017",
+                            education_bachelors = "B15003_022",
+                            public_assistance_total = "B22003_001",
+                            public_assistance_received = "B22003_002",
+                            public_assistance_not_received = "B22003_005",
+                            poverty_total = "B17020_001",
+                            poverty_below = "B17020_002",
+                            poverty_above = "B17020_010",
+                            rent = "B25064_001",
+                            real_estate_tax_median = "B25103_001",
+                            real_estate_tax_aggregate = "B25090_001"),              
+              state = "MD",
+              year = 2021) %>% 
+  filter(NAME == "Waldorf CDP, Maryland") %>% 
+  mutate(year = 2021)
+
+# Waldorf data from 2008
+
+w_2018 <- get_acs(geography = "place",
+                variables = c(medi_house_income = "B19013_001", 
+                            population = "B01003_001", 
+                            medi_home_value = "B25077_001", 
+                            housing_total = "B25002_001",
+                            housing_occupied = "B25002_002",
+                            housing_vacancies = "B25002_003", 
+                            labor_total = "B23025_003", 
+                            labor_employed = "B23025_004", 
+                            labor_unemployed = "B23025_005",
+                            education_total = "B15003_001",
+                            education_hs = "B15003_017",
+                            education_bachelors = "B15003_022",
+                            public_assistance_total = "B22003_001",
+                            public_assistance_received = "B22003_002",
+                            public_assistance_not_received = "B22003_005",
+                            poverty_total = "B17020_001",
+                            poverty_below = "B17020_002",
+                            poverty_above = "B17020_010",
+                            rent = "B25064_001",
+                            real_estate_tax_median = "B25103_001",
+                            real_estate_tax_aggregate = "B25090_001"),              
+              state = "MD",
+              year = 2018) %>% 
+  filter(NAME == "Waldorf CDP, Maryland") %>% 
+  mutate(year = 2018)
+
+# Waldorf 2013
+w_2013 <- get_acs(geography = "place",
+                variables = c(medi_house_income = "B19013_001", 
+                            population = "B01003_001", 
+                            medi_home_value = "B25077_001", 
+                            housing_total = "B25002_001",
+                            housing_occupied = "B25002_002",
+                            housing_vacancies = "B25002_003", 
+                            labor_total = "B23025_003", 
+                            labor_employed = "B23025_004", 
+                            labor_unemployed = "B23025_005",
+                            education_total = "B15003_001",
+                            education_hs = "B15003_017",
+                            education_bachelors = "B15003_022",
+                            public_assistance_total = "B22003_001",
+                            public_assistance_received = "B22003_002",
+                            public_assistance_not_received = "B22003_005",
+                            poverty_total = "B17020_001",
+                            poverty_below = "B17020_002",
+                            poverty_above = "B17020_010",
+                            rent = "B25064_001",
+                            real_estate_tax_median = "B25103_001",
+                            real_estate_tax_aggregate = "B25090_001"),              
+              state = "MD",
+              year = 2013) %>% 
+  filter(NAME == "Waldorf CDP, Maryland") %>% 
+  mutate(year = 2013)
+
+# Waldorf 2009
+
+w_2009 <- get_acs(geography = "place",
+                variables = c(medi_house_income = "B19013_001", 
+                            population = "B01003_001", 
+                            medi_home_value = "B25077_001", 
+                            housing_total = "B25002_001",
+                            housing_occupied = "B25002_002",
+                            housing_vacancies = "B25002_003", 
+                            labor_total = "B23025_003", 
+                            labor_employed = "B23025_004", 
+                            labor_unemployed = "B23025_005",
+                            education_total = "B15003_001",
+                            education_hs = "B15003_017",
+                            education_bachelors = "B15003_022",
+                            public_assistance_total = "B22003_001",
+                            public_assistance_received = "B22003_002",
+                            public_assistance_not_received = "B22003_005",
+                            poverty_total = "B17020_001",
+                            poverty_below = "B17020_002",
+                            poverty_above = "B17020_010",
+                            rent = "B25064_001",
+                            real_estate_tax_median = "B25103_001",
+                            real_estate_tax_aggregate = "B25090_001"),              
+              state = "MD",
+              year = 2010) %>% 
+  filter(NAME == "Waldorf CDP, Maryland") %>% 
+  mutate(year = 2010)
+
+# (Error: Your API call has errors. The API message returned is error: error: unknown variable B23025_003E ) However this variable does not show up anywhere.
+
+```
+
+
+
