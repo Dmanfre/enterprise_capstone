@@ -170,6 +170,8 @@ charles_2007 <- get_acs(geography = "county",
   filter(NAME == "Charles County, Maryland") %>% 
   mutate(year = 2007)
 
+
+
 #2013
 charles_2013 <- get_acs(geography = "county",
                 variables = c(medi_house_income = "B19013_001", 
