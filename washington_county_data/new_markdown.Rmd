@@ -530,9 +530,12 @@ tract_2018 <- get_acs(geography = "tract",
 
 ```
 
+#START OF PREPPING OUTPUT FOR ABBI
+
+
 ```{r}
 
-# TRYING TO MAKE A TEMPLATE FOR ONE VARIABLE: rent
+#RENT
 
 #STATE
 # Note: starting point here is ACS3 2007
@@ -644,11 +647,124 @@ rent <- bind_rows(mdrent, charlesrent, wrent, tractrent)
 # CSV
 write_csv(rent, file = "rent.csv")
 
-
 ```
 
 
+```{r}
 
+#POPULATION
+
+#STATE
+# Note: starting point here is ACS3 2007
+mdpop_2008 <- md_2007 %>%
+  filter(variable == "population") %>%
+  select(year, estimate)
+
+mdpop_2013 <- md_2013 %>%
+  filter(variable == "population") %>%
+  select(year, estimate)
+
+mdpop_2018 <- md_2018 %>%
+  filter(variable == "population") %>%
+  select(year, estimate)
+
+mdpop <- bind_rows(mdpop_2008, mdpop_2013, mdpop_2018) %>%
+  spread(key = year, value = estimate) %>%
+  rename("year_2008" = "2007") %>%
+  rename("year_2013" = "2013") %>%
+  rename("year_2018" = "2018") %>%
+  mutate(location = "Maryland") %>%
+  mutate(variable = "total population") %>%
+  mutate(pct_change_5 = round((year_2013-year_2008)/year_2008*100,1)) %>%
+  mutate(pct_change_10 = round((year_2018-year_2008)/year_2008*100,1)) %>%
+  mutate(pct_change_5_to_10 = round((year_2018-year_2013)/year_2013*100,1)) %>%
+  select(variable, location, year_2008:year_2018, pct_change_5:pct_change_5_to_10)
+
+#COUNTY
+# Note: starting point here is ACS3 2007
+charlespop_2008 <- charles_2007 %>%
+  filter(variable == "population") %>%
+  select(year, estimate)
+
+charlespop_2013 <- charles_2013 %>%
+  filter(variable == "population") %>%
+  select(year, estimate)
+
+charlespop_2018 <- charles_2018 %>%
+  filter(variable == "population") %>%
+  select(year, estimate)
+
+charlespop <- bind_rows(charlespop_2008, charlespop_2013, charlespop_2018) %>%
+  spread(key = year, value = estimate) %>%
+  rename("year_2008" = "2007") %>%
+  rename("year_2013" = "2013") %>%
+  rename("year_2018" = "2018") %>%
+  mutate(location = "Charles County") %>%
+  mutate(variable = "total population") %>%
+  mutate(pct_change_5 = round((year_2013-year_2008)/year_2008*100,1)) %>%
+  mutate(pct_change_10 = round((year_2018-year_2008)/year_2008*100,1)) %>%
+  mutate(pct_change_5_to_10 = round((year_2018-year_2013)/year_2013*100,1)) %>%
+  select(variable, location, year_2008:year_2018, pct_change_5:pct_change_5_to_10)
+
+#CITY
+# Note: starting point here is ACS3 2007
+wpop_2008 <- w_2007 %>%
+  filter(variable == "population") %>%
+  select(year, estimate)
+
+wpop_2013 <- w_2013 %>%
+  filter(variable == "population") %>%
+  select(year, estimate)
+
+wpop_2018 <- w_2018 %>%
+  filter(variable == "population") %>%
+  select(year, estimate)
+
+wpop <- bind_rows(wpop_2008, wpop_2013, wpop_2018) %>%
+  spread(key = year, value = estimate) %>%
+  rename("year_2008" = "2007") %>%
+  rename("year_2013" = "2013") %>%
+  rename("year_2018" = "2018") %>%
+  mutate(location = "Waldorf") %>%
+  mutate(variable = "total population") %>%
+  mutate(pct_change_5 = round((year_2013-year_2008)/year_2008*100,1)) %>%
+  mutate(pct_change_10 = round((year_2018-year_2008)/year_2008*100,1)) %>%
+  mutate(pct_change_5_to_10 = round((year_2018-year_2013)/year_2013*100,1)) %>%
+  select(variable, location, year_2008:year_2018, pct_change_5:pct_change_5_to_10)
+
+#TRACT
+# Note: starting point here is ACS5 2009
+tractpop_2008 <- tract_2009 %>%
+  filter(variable == "population") %>%
+  select(year, estimate)
+
+tractpop_2013 <- tract_2013 %>%
+  filter(variable == "population") %>%
+  select(year, estimate)
+
+tractpop_2018 <- tract_2018 %>%
+  filter(variable == "population") %>%
+  select(year, estimate)
+
+tractpop <- bind_rows(tractpop_2008, tractpop_2013, tractpop_2018) %>%
+  spread(key = year, value = estimate) %>%
+  rename("year_2008" = "2009") %>%
+  rename("year_2013" = "2013") %>%
+  rename("year_2018" = "2018") %>%
+  mutate(location = "Census Tract 8509.04") %>%
+  mutate(variable = "total population") %>%
+  mutate(pct_change_5 = round((year_2013-year_2008)/year_2008*100,1)) %>%
+  mutate(pct_change_10 = round((year_2018-year_2008)/year_2008*100,1)) %>%
+  mutate(pct_change_5_to_10 = round((year_2018-year_2013)/year_2013*100,1)) %>%
+  select(variable, location, year_2008:year_2018, pct_change_5:pct_change_5_to_10)
+
+# ALL TOGETHER
+population <- bind_rows(mdpop, charlespop, wpop, tractpop)
+
+# CSV
+write_csv(population, file = "population.csv")
+
+```
 
 
 
