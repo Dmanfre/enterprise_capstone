@@ -43,9 +43,9 @@ ACS_2009 <- load_variables(2009, "acs5")
 ACS_2008 <- load_variables(2008, "acs3")
 ACS_2007 <- load_variables(2007, "acs3")
 
-md_cities <- get_acs(geography = "place",
-              variables = c(medi_house_income = "B19013_001"),
-              state = "MD")
+#md_cities <- get_acs(geography = "place",
+              #variables = c(medi_house_income = "B19013_001"),
+              #state = "MD")
 
 ```
 
@@ -57,6 +57,8 @@ md_cities <- get_acs(geography = "place",
 ## rent variables are median gross rent
 
 #2007
+#04/30 update: revised codes for education based on https://api.census.gov/data/2007/acs/acs3/variables.html
+
 md_2007 <- get_acs(geography = "state",
                 variables = c(medi_house_income = "B19013_001", 
                             population = "B01003_001", 
@@ -67,9 +69,9 @@ md_2007 <- get_acs(geography = "state",
                             #labor_total = "B23025_003", 
                             #labor_employed = "B23025_004", 
                             #labor_unemployed = "B23025_005",
-                            #education_total = "B15003_001",
-                            #education_hs = "B15003_017",
-                            #education_bachelors = "B15003_022",
+                            education_total = "B06009_001",
+                            education_hs = "B06009_003",
+                            education_bachelors = "B06009_005",
                             public_assistance_total = "B22003_001",
                             public_assistance_received = "B22003_002",
                             public_assistance_not_received = "B22003_005",
@@ -146,6 +148,7 @@ md_2018 <- get_acs(geography = "state",
 #CODE BLOCKS FOR COUNTY
 
 #2007
+#04/30 update: revised codes for education based on https://api.census.gov/data/2007/acs/acs3/variables.html
 charles_2007 <- get_acs(geography = "county",
                 variables = c(medi_house_income = "B19013_001", 
                             population = "B01003_001", 
@@ -156,9 +159,9 @@ charles_2007 <- get_acs(geography = "county",
                             #labor_total = "B23025_003", 
                             #labor_employed = "B23025_004", 
                             #labor_unemployed = "B23025_005",
-                            #education_total = "B15003_001",
-                            #education_hs = "B15003_017",
-                            #education_bachelors = "B15003_022",
+                            education_total = "B06009_001",
+                            education_hs = "B06009_003",
+                            education_bachelors = "B06009_005",
                             public_assistance_total = "B22003_001",
                             public_assistance_received = "B22003_002",
                             public_assistance_not_received = "B22003_005",
@@ -173,7 +176,6 @@ charles_2007 <- get_acs(geography = "county",
               year = 2007) %>% 
   filter(NAME == "Charles County, Maryland") %>% 
   mutate(year = 2007)
-
 
 
 #2013
@@ -240,6 +242,7 @@ charles_2018 <- get_acs(geography = "county",
 #CODE BLOCKS FOR CITY
 
 #2007
+#04/30 update: revised codes for education based on https://api.census.gov/data/2007/acs/acs3/variables.html
 w_2007 <- get_acs(geography = "place",
                 variables = c(medi_house_income = "B19013_001", 
                             population = "B01003_001", 
@@ -250,9 +253,9 @@ w_2007 <- get_acs(geography = "place",
                             #labor_total = "B23025_003", 
                             #labor_employed = "B23025_004", 
                             #labor_unemployed = "B23025_005",
-                            #education_total = "B15003_001",
-                            #education_hs = "B15003_017",
-                            #education_bachelors = "B15003_022",
+                            education_total = "B06009_001",
+                            education_hs = "B06009_003",
+                            education_bachelors = "B06009_005",
                             public_assistance_total = "B22003_001",
                             public_assistance_received = "B22003_002",
                             public_assistance_not_received = "B22003_005",
@@ -445,6 +448,8 @@ mdtracts_2018 <- get_acs(geography = "tract",
 #Census tract = 8509.04
 
 #2009 (unable to use 2007 because tract-level data not available for ACS3)
+#04/30 update: revised codes for education based on https://api.census.gov/data/2009/acs/acs5/variables.html
+# Using age 25+ for consistency with other education variables
 tract_2009 <- get_acs(geography = "tract",
                 variables = c(medi_house_income = "B19013_001", 
                             population = "B01003_001", 
@@ -455,9 +460,13 @@ tract_2009 <- get_acs(geography = "tract",
                             #labor_total = "B23025_003", 
                             #labor_employed = "B23025_004", 
                             #labor_unemployed = "B23025_005",
-                            #education_total = "B15003_001",
-                            #education_hs = "B15003_017",
-                            #education_bachelors = "B15003_022",
+                            education_total = "B15002_001",
+                            education_men_total = "B15002_002",
+                            education_men_hs = "B15002_011",
+                            education_men_bachelors = "B15002_015",
+                            education_women_total = "B15002_019",
+                            education_women_hs = "B15002_028",
+                            education_women_bachelors = "B15002_032",
                             #public_assistance_total = "B22003_001",
                             #public_assistance_received = "B22003_002",
                             #public_assistance_not_received = "B22003_005",
@@ -884,6 +893,128 @@ write_csv(income, file = "income.csv")
 ```
 
 
+```{r}
+
+#EDUCATION - this one works differently than the templates above
+#Will calculate as percentage of people with a bachelor's degree
+
+#STATE
+# Note: starting point here is ACS3 2007
+mdbachelors_2008 <- md_2007 %>%
+  filter(variable == "education_total"|variable == "education_bachelors") %>%
+  mutate(pct = round(estimate/estimate[variable == "education_total"]*100,1)) %>%
+  filter(variable == "education_bachelors") %>%
+  select(year, pct)
+
+mdbachelors_2013 <- md_2013 %>%
+  filter(variable == "education_total"|variable == "education_bachelors") %>%
+  mutate(pct = round(estimate/estimate[variable == "education_total"]*100,1)) %>%
+  filter(variable == "education_bachelors") %>%
+  select(year, pct)
+
+mdbachelors_2018 <- md_2018 %>%
+  filter(variable == "education_total"|variable == "education_bachelors") %>%
+  mutate(pct = round(estimate/estimate[variable == "education_total"]*100,1)) %>%
+  filter(variable == "education_bachelors") %>%
+  select(year, pct)
+
+mdbachelors <- bind_rows(mdbachelors_2008, mdbachelors_2013, mdbachelors_2018) %>%
+  spread(key = year, value = pct) %>%
+  rename("year_2008" = "2007") %>%
+  rename("year_2013" = "2013") %>%
+  rename("year_2018" = "2018") %>%
+  mutate(location = "Maryland") %>%
+  mutate(variable = "pct with bachelors degrees") %>%
+  mutate(pct_change_5 = year_2013-year_2008) %>%
+  mutate(pct_change_10 = year_2018-year_2008) %>%
+  mutate(pct_change_5_to_10 = year_2018-year_2013) %>%
+  select(variable, location, year_2008:year_2018, pct_change_5:pct_change_5_to_10)
+
+#COUNTY
+# Note: starting point here is ACS3 2007
+charlesincome_2008 <- charles_2007 %>%
+  filter(variable == "medi_house_income") %>%
+  select(year, estimate)
+
+charlesincome_2013 <- charles_2013 %>%
+  filter(variable == "medi_house_income") %>%
+  select(year, estimate)
+
+charlesincome_2018 <- charles_2018 %>%
+  filter(variable == "medi_house_income") %>%
+  select(year, estimate)
+
+charlesincome <- bind_rows(charlesincome_2008, charlesincome_2013, charlesincome_2018) %>%
+  spread(key = year, value = estimate) %>%
+  rename("year_2008" = "2007") %>%
+  rename("year_2013" = "2013") %>%
+  rename("year_2018" = "2018") %>%
+  mutate(location = "Charles County") %>%
+  mutate(variable = "median household income") %>%
+  mutate(pct_change_5 = round((year_2013-year_2008)/year_2008*100,1)) %>%
+  mutate(pct_change_10 = round((year_2018-year_2008)/year_2008*100,1)) %>%
+  mutate(pct_change_5_to_10 = round((year_2018-year_2013)/year_2013*100,1)) %>%
+  select(variable, location, year_2008:year_2018, pct_change_5:pct_change_5_to_10)
+
+#CITY
+# Note: starting point here is ACS3 2007
+wincome_2008 <- w_2007 %>%
+  filter(variable == "medi_house_income") %>%
+  select(year, estimate)
+
+wincome_2013 <- w_2013 %>%
+  filter(variable == "medi_house_income") %>%
+  select(year, estimate)
+
+wincome_2018 <- w_2018 %>%
+  filter(variable == "medi_house_income") %>%
+  select(year, estimate)
+
+wincome <- bind_rows(wincome_2008, wincome_2013, wincome_2018) %>%
+  spread(key = year, value = estimate) %>%
+  rename("year_2008" = "2007") %>%
+  rename("year_2013" = "2013") %>%
+  rename("year_2018" = "2018") %>%
+  mutate(location = "Waldorf") %>%
+  mutate(variable = "median household income") %>%
+  mutate(pct_change_5 = round((year_2013-year_2008)/year_2008*100,1)) %>%
+  mutate(pct_change_10 = round((year_2018-year_2008)/year_2008*100,1)) %>%
+  mutate(pct_change_5_to_10 = round((year_2018-year_2013)/year_2013*100,1)) %>%
+  select(variable, location, year_2008:year_2018, pct_change_5:pct_change_5_to_10)
+
+#TRACT
+# Note: starting point here is ACS5 2009
+tractincome_2008 <- tract_2009 %>%
+  filter(variable == "medi_house_income") %>%
+  select(year, estimate)
+
+tractincome_2013 <- tract_2013 %>%
+  filter(variable == "medi_house_income") %>%
+  select(year, estimate)
+
+tractincome_2018 <- tract_2018 %>%
+  filter(variable == "medi_house_income") %>%
+  select(year, estimate)
+
+tractincome <- bind_rows(tractincome_2008, tractincome_2013, tractincome_2018) %>%
+  spread(key = year, value = estimate) %>%
+  rename("year_2008" = "2009") %>%
+  rename("year_2013" = "2013") %>%
+  rename("year_2018" = "2018") %>%
+  mutate(location = "Census Tract 8509.04") %>%
+  mutate(variable = "median household income") %>%
+  mutate(pct_change_5 = round((year_2013-year_2008)/year_2008*100,1)) %>%
+  mutate(pct_change_10 = round((year_2018-year_2008)/year_2008*100,1)) %>%
+  mutate(pct_change_5_to_10 = round((year_2018-year_2013)/year_2013*100,1)) %>%
+  select(variable, location, year_2008:year_2018, pct_change_5:pct_change_5_to_10)
+
+# ALL TOGETHER
+income <- bind_rows(mdincome, charlesincome, wincome, tractincome)
+
+# CSV
+write_csv(income, file = "income.csv")
+
+```
 
 ```{r}
 
