@@ -39,6 +39,7 @@ Sys.setenv(CENSUS_API_KEY = "5cb2b9c628a1d1329c5bf4d36fe4435c6501efc8", overwrit
 ACS_2021 <- load_variables(2021, "acs5")
 ACS_2018 <- load_variables(2018, "acs5")
 ACS_2013 <- load_variables(2018, "acs5")
+ACS_2010 <- load_variables(2010, "acs5")
 ACS_2009 <- load_variables(2009, "acs5")
 ACS_2008 <- load_variables(2008, "acs3")
 ACS_2007 <- load_variables(2007, "acs3")
@@ -94,7 +95,7 @@ md_2013 <- get_acs(geography = "state",
                             housing_total = "B25002_001",
                             housing_occupied = "B25002_002",
                             housing_vacancies = "B25002_003", 
-                            labor_total = "B23025_003", 
+                            labor_total = "B23025_003",
                             labor_employed = "B23025_004", 
                             labor_unemployed = "B23025_005",
                             education_total = "B15003_001",
@@ -440,8 +441,6 @@ mdtracts_2018 <- get_acs(geography = "tract",
 
 ```
 
-
-
 ```{r}
 
 #CODE BLOCKS FOR CENSUS TRACT
@@ -478,7 +477,7 @@ tract_2009 <- get_acs(geography = "tract",
                             #real_estate_tax_aggregate = "B25090_001",
               state = "MD",
               year = 2009) %>% 
-  filter(NAME == "Census Tract 8509.04, Charles County, Maryland") %>% 
+  filter(NAME == "Census Tract 8509.04, Charles County, Maryland") %>%
   mutate(year = 2009)
 
 #2013
@@ -892,7 +891,6 @@ write_csv(income, file = "income.csv")
 
 ```
 
-
 ```{r}
 
 #EDUCATION - this one works differently than the templates above
@@ -1052,10 +1050,142 @@ write_csv(bachelors, file = "bachelors.csv")
 ```
 
 ```{r}
+
+#REAL ESTATE TAX REVENUE
+
+#Note: It does not appear that aggregate tax revenues were collected in 2007ACS3 (median only) and 2009ACS5 (no apparent tax variable). To represent 2008, we are using the 2010ACS5. This is in line with research that used 2010 census data as a starting point for measuring the impact of stadiums built in 2008.
+
+#STATE
+# Note: starting point here is ACS5 2010
+mdtaxes_2008 <- get_acs(geography = "state",
+                variables = c(real_estate_tax_aggregate = "B25090_001"),
+              state = "MD",
+              year = 2010) %>% 
+  mutate(year = 2010) %>%
+  select(year, estimate)
+
+mdtaxes_2013 <- md_2013 %>%
+  filter(variable == "real_estate_tax_aggregate") %>%
+  select(year, estimate)
+
+mdtaxes_2018 <- md_2018 %>%
+  filter(variable == "real_estate_tax_aggregate") %>%
+  select(year, estimate)
+
+mdtaxes <- bind_rows(mdtaxes_2008, mdtaxes_2013, mdtaxes_2018) %>%
+  spread(key = year, value = estimate) %>%
+  rename("year_2008" = "2010") %>%
+  rename("year_2013" = "2013") %>%
+  rename("year_2018" = "2018") %>%
+  mutate(location = "Maryland") %>%
+  mutate(variable = "total real estate taxes paid") %>%
+  mutate(pct_change_5 = round((year_2013-year_2008)/year_2008*100,1)) %>%
+  mutate(pct_change_10 = round((year_2018-year_2008)/year_2008*100,1)) %>%
+  mutate(pct_change_5_to_10 = round((year_2018-year_2013)/year_2013*100,1)) %>%
+  select(variable, location, year_2008:year_2018, pct_change_5:pct_change_5_to_10)
+
+#COUNTY
+# Note: starting point here is ACS5 2010
+charlestaxes_2008 <- get_acs(geography = "county",
+                variables = c(real_estate_tax_aggregate = "B25090_001"),
+              state = "MD",
+              year = 2010) %>% 
+  mutate(year = 2010) %>%
+  filter(NAME == "Charles County, Maryland") %>%
+  select(year, estimate)
+
+charlestaxes_2013 <- charles_2013 %>%
+  filter(variable == "real_estate_tax_aggregate") %>%
+  select(year, estimate)
+
+charlestaxes_2018 <- charles_2018 %>%
+  filter(variable == "real_estate_tax_aggregate") %>%
+  select(year, estimate)
+
+charlestaxes <- bind_rows(charlestaxes_2008, charlestaxes_2013, charlestaxes_2018) %>%
+  spread(key = year, value = estimate) %>%
+  rename("year_2008" = "2010") %>%
+  rename("year_2013" = "2013") %>%
+  rename("year_2018" = "2018") %>%
+  mutate(location = "Charles County") %>%
+  mutate(variable = "total real estate taxes paid") %>%
+  mutate(pct_change_5 = round((year_2013-year_2008)/year_2008*100,1)) %>%
+  mutate(pct_change_10 = round((year_2018-year_2008)/year_2008*100,1)) %>%
+  mutate(pct_change_5_to_10 = round((year_2018-year_2013)/year_2013*100,1)) %>%
+  select(variable, location, year_2008:year_2018, pct_change_5:pct_change_5_to_10)
+
+#CITY
+# Note: starting point here is ACS5 2010
+wtaxes_2008 <- get_acs(geography = "place",
+                variables = c(real_estate_tax_aggregate = "B25090_001"),
+              state = "MD",
+              year = 2010) %>% 
+  mutate(year = 2010) %>%
+  filter(NAME == "Waldorf CDP, Maryland") %>%
+  select(year, estimate)
+
+wtaxes_2013 <- w_2013 %>%
+  filter(variable == "real_estate_tax_aggregate") %>%
+  select(year, estimate)
+
+wtaxes_2018 <- w_2018 %>%
+  filter(variable == "real_estate_tax_aggregate") %>%
+  select(year, estimate)
+
+wtaxes <- bind_rows(wtaxes_2008, wtaxes_2013, wtaxes_2018) %>%
+  spread(key = year, value = estimate) %>%
+  rename("year_2008" = "2010") %>%
+  rename("year_2013" = "2013") %>%
+  rename("year_2018" = "2018") %>%
+  mutate(location = "Waldorf") %>%
+  mutate(variable = "total real estate taxes paid") %>%
+  mutate(pct_change_5 = round((year_2013-year_2008)/year_2008*100,1)) %>%
+  mutate(pct_change_10 = round((year_2018-year_2008)/year_2008*100,1)) %>%
+  mutate(pct_change_5_to_10 = round((year_2018-year_2013)/year_2013*100,1)) %>%
+  select(variable, location, year_2008:year_2018, pct_change_5:pct_change_5_to_10)
+
+#TRACT
+# Note: starting point here is ACS5 2010
+tracttaxes_2008 <- get_acs(geography = "tract",
+                variables = c(real_estate_tax_aggregate = "B25090_001"),
+              state = "MD",
+              year = 2010) %>% 
+  mutate(year = 2010) %>%
+  filter(NAME == "Census Tract 8509.04, Charles County, Maryland") %>%
+  select(year, estimate)
+
+tracttaxes_2013 <- tract_2013 %>%
+  filter(variable == "real_estate_tax_aggregate") %>%
+  select(year, estimate)
+
+tracttaxes_2018 <- tract_2018 %>%
+  filter(variable == "real_estate_tax_aggregate") %>%
+  select(year, estimate)
+
+tracttaxes <- bind_rows(tracttaxes_2008, tracttaxes_2013, tracttaxes_2018) %>%
+  spread(key = year, value = estimate) %>%
+  rename("year_2008" = "2010") %>%
+  rename("year_2013" = "2013") %>%
+  rename("year_2018" = "2018") %>%
+  mutate(location = "Census Tract 8509.04") %>%
+  mutate(variable = "total real estate taxes paid") %>%
+  mutate(pct_change_5 = round((year_2013-year_2008)/year_2008*100,1)) %>%
+  mutate(pct_change_10 = round((year_2018-year_2008)/year_2008*100,1)) %>%
+  mutate(pct_change_5_to_10 = round((year_2018-year_2013)/year_2013*100,1)) %>%
+  select(variable, location, year_2008:year_2018, pct_change_5:pct_change_5_to_10)
+
+# ALL TOGETHER
+taxes <- bind_rows(mdtaxes, charlestaxes, wtaxes, tracttaxes)
+
+# CSV
+write_csv(taxes, file = "taxes.csv")
+
+```
+
+```{r}
 ### SETTING UP MEDIAN HOME PRICES
 
 #HOME PRICES
-#
 
 #STATE
 # Note: starting point here is ACS3 2007
@@ -1077,7 +1207,7 @@ mdhomeprice <- bind_rows(mdhomeprice_2008, mdhomeprice_2013, mdhomeprice_2018) %
   rename("year_2013" = "2013") %>%
   rename("year_2018" = "2018") %>%
   mutate(location = "Maryland") %>%
-  mutate(variable = "median household value") %>%
+  mutate(variable = "median home price") %>%
   mutate(pct_change_5 = round((year_2013-year_2008)/year_2008*100,1)) %>%
   mutate(pct_change_10 = round((year_2018-year_2008)/year_2008*100,1)) %>%
   mutate(pct_change_5_to_10 = round((year_2018-year_2013)/year_2013*100,1)) %>%
