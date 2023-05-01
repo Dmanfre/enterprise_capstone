@@ -1183,7 +1183,6 @@ write_csv(taxes, file = "taxes.csv")
 ```
 
 ```{r}
-### SETTING UP MEDIAN HOME PRICES
 
 #HOME PRICES
 
