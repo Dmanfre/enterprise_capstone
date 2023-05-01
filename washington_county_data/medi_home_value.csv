@@ -1,0 +1,5 @@
+variable,location,year_2008,year_2013,year_2018,pct_change_5,pct_change_10,pct_change_5_to_10
+median home value,Maryland,323400,292700,305500,-9.5,-5.5,4.4
+median home value,Charles County,349700,297900,302800,-14.8,-13.4,1.6
+median home value,Waldorf,348600,264000,267300,-24.3,-23.3,1.2
+median home value,Census Tract 8509.04,460500,320400,339200,-30.4,-26.3,5.9
